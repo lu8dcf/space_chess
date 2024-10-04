@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bkipu72p7cbq6"]
+
+[node name="SettingMenu" type="Popup"]
+visible = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.13717, 0.0203, 0.29, 0.541176)

@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://cc6gry5jybsfx"]
+
+[ext_resource type="Script" path="res://fondo_a.gd" id="1_uicqx"]
+[ext_resource type="Texture2D" uid="uid://db0ledfe31ch1" path="res://recursos/fondo_movil/capasnave.png" id="2_6qu1g"]
+[ext_resource type="Script" path="res://estrellas.gd" id="3_6kuxv"]
+[ext_resource type="Texture2D" uid="uid://joq5yffsvfdn" path="res://recursos/fondo_movil/planeta2.png" id="3_iyypv"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_jgr0k"]
+a = Vector2(2, 37)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_i4d2m"]
+a = Vector2(-4, 713)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_8adum"]
+a = Vector2(6, 661)
+b = Vector2(0, -68)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_dmlur"]
+a = Vector2(-113, 700)
+b = Vector2(-1403, 688)
+
+[node name="fondoA" type="Area2D"]
+script = ExtResource("1_uicqx")
+
+[node name="Fondo_Azul" type="Sprite2D" parent="."]
+position = Vector2(639.228, 360)
+scale = Vector2(1.00981, 0.371)
+texture = ExtResource("2_6qu1g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-66, -5)
+shape = SubResource("SegmentShape2D_jgr0k")
+
+[node name="estrellas" type="RigidBody2D" parent="."]
+mass = 0.003
+script = ExtResource("3_6kuxv")
+
+[node name="Sprite2D" type="Sprite2D" parent="estrellas"]
+position = Vector2(643, -1384)
+scale = Vector2(1.01486, 2.117)
+texture = ExtResource("3_iyypv")
+
+[node name="limite_izq" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="limite_izq"]
+shape = SubResource("SegmentShape2D_i4d2m")
+
+[node name="limite_der" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="limite_der"]
+position = Vector2(1286, 73)
+shape = SubResource("SegmentShape2D_8adum")
+
+[node name="limite_abajo" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="limite_abajo"]
+position = Vector2(1404, 41)
+shape = SubResource("SegmentShape2D_dmlur")

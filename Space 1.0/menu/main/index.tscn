@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvricas5e7cbo"]
+
+[ext_resource type="Script" path="res://menu/main/scripts/menu_main.gd" id="1_qewvt"]
+[ext_resource type="Texture2D" uid="uid://c2vvrdqlrm2tq" path="res://recursos/fondo/1920x1080.png" id="2_oar1p"]
+[ext_resource type="Texture2D" uid="uid://sjalmbsiaoct" path="res://menu/button/play.png" id="3_sp5ls"]
+[ext_resource type="Texture2D" uid="uid://bn8gt86ujaoh5" path="res://menu/button/play_press.png" id="4_iv5vv"]
+[ext_resource type="Texture2D" uid="uid://b0htlm8djib1s" path="res://menu/button/options.png" id="5_d1af0"]
+[ext_resource type="Texture2D" uid="uid://c1j062s4aencg" path="res://menu/button/options_press.png" id="6_k0xnh"]
+[ext_resource type="Texture2D" uid="uid://dyqedcbp5fa2" path="res://menu/button/quit.png" id="7_0i1uf"]
+[ext_resource type="Texture2D" uid="uid://vydn6p3hqqgk" path="res://menu/button/quit_press.png" id="8_pdaxx"]
+
+[node name="Menu Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qewvt")
+
+[node name="Background" type="Node2D" parent="."]
+scale = Vector2(0.6, 0.6)
+
+[node name="image_back" type="Sprite2D" parent="Background"]
+position = Vector2(1072.5, 597.501)
+scale = Vector2(1.11719, 1.11882)
+texture = ExtResource("2_oar1p")
+
+[node name="Tittle" type="Label" parent="."]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 57.0
+offset_right = 347.0
+offset_bottom = 126.0
+theme_override_font_sizes/font_size = 50
+text = "Space Chess"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -162.0
+offset_top = -412.0
+offset_right = 156.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="play" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_sp5ls")
+texture_pressed = ExtResource("4_iv5vv")
+
+[node name="options" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_d1af0")
+texture_pressed = ExtResource("6_k0xnh")
+
+[node name="quit" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("7_0i1uf")
+texture_pressed = ExtResource("8_pdaxx")
+
+[connection signal="pressed" from="VBoxContainer/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="VBoxContainer/quit" to="." method="_on_quit_pressed"]

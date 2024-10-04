@@ -1,0 +1,41 @@
+extends CharacterBody2D
+
+# enenmigo1 Verde PEON
+var pasos = 4  # Velocidad  del paso de referencia (similar a un "cuadro" de ajedrez)
+var move_direction = Vector2(0, 1)  # Dirección de descenso sollo en eje y
+var rand = RandomNumberGenerator.new() # semilla de random segun el tiempo
+
+
+func _ready():
+	add_to_group("enemy") # Agrega al grupo enemigo para poder ser destruido por el laser player
+	
+	cambio_velocidad() # Selector de velocidades de las distintas instancias por random
+	
+	
+	# Cada instancia tendra una velocidad diferente aleatoria
+func cambio_velocidad():
+	var random_integer = rand.randi_range(0, 2)  # Genera un número entre 0  y 2 (inclusive)
+	if random_integer==1:  
+		pasos /= 2      # divide la velocidad
+	elif  random_integer==2:
+		pasos *= 2		# duplica la velicidad
+		
+# Mueve al enemigo un paso hacia abajo (simulando un peón)
+func move_down():
+	position += move_direction * pasos
+
+# cuando el laser del player impacta en el enemigo y lo destruye
+@export var explosion: PackedScene  # Exporta la escena de explosión
+func _pego_el_laser():
+	var explosion_instance = explosion.instantiate() # Instanciar la escena de explosión
+	explosion_instance.position = position  # Colocar la explosión en la posición del enemigo
+	get_parent().add_child(explosion_instance) # Agregar de hijo 
+	explosion_instance.emitting = true  # Iniciar la emisión de partículas
+	
+# Destruir el enemigo y player con el que colisiona
+func _on_area_2d_body_entered(body):
+	if body.is_in_group("player"):
+		body._choco_player()  # Llama a la función que maneja la destrucción
+		body.queue_free()  # Elimina el objeto player
+		queue_free()  # Elimina el enemigo verde
+	

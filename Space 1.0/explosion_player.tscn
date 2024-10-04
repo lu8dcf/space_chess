@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://v50j6nufhptt"]
+
+[sub_resource type="Curve" id="Curve_h1jas"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.147059, -90.989), 0.0, 0.0, 0, 0, Vector2(0.235294, 59.3407), 0.0, 0.0, 0, 0, Vector2(0.333333, -130.549), 0.0, 0.0, 0, 0, Vector2(0.357843, 241.319), 0.0, 0.0, 0, 0, Vector2(0.426471, -225.495), 0.0, 0.0, 0, 0, Vector2(0.446078, 83.0769), 0.0, 0.0, 0, 0, Vector2(0.656863, 360), 0.0, 0.0, 0, 0, Vector2(0.79902, 360), 0.0, 0.0, 0, 0, Vector2(0.985294, 320.44), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 11
+
+[sub_resource type="Curve" id="Curve_us3so"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0.0196078, 10.989), 0.0, 0.0, 0, 0, Vector2(0.215686, 142.857), 0.0, 0.0, 0, 0, Vector2(0.328431, -41.7582), 0.0, 0.0, 0, 0, Vector2(0.436275, 94.5055), 0.0, 0.0, 0, 0, Vector2(0.710784, -76.9231), 0.0, 0.0, 0, 0, Vector2(0.843137, 129.67), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="Curve" id="Curve_ly70d"]
+_data = [Vector2(0.0735294, 1), 0.0, 0.0, 0, 0, Vector2(0.191176, 0.131868), 0.0, 0.0, 0, 0, Vector2(0.328431, 0.846154), 0.0, 0.0, 0, 0, Vector2(0.485294, 0.362637), 0.0, 0.0, 0, 0, Vector2(0.730392, 0.901099), 0.0, 0.0, 0, 0, Vector2(0.921569, 0.021978), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="Gradient" id="Gradient_pbabq"]
+offsets = PackedFloat32Array(0, 0.153409, 0.375, 0.539773, 0.75, 0.903409)
+colors = PackedColorArray(0.905882, 0, 0, 1, 0.572893, 0.531486, 0.269222, 1, 0.541823, 0.346579, 0.0716977, 1, 0.835294, 0.0313726, 0.027451, 1, 0.904435, 0.503338, 0.177361, 1, 1, 1, 0.054902, 1)
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+emitting = false
+amount = 54
+lifetime = 4.0
+one_shot = true
+preprocess = 1.0
+explosiveness = 1.0
+randomness = 1.0
+fract_delta = false
+spread = 180.0
+gravity = Vector2(0, 45)
+initial_velocity_min = 3.85
+initial_velocity_max = 348.08
+angular_velocity_min = 20.0
+angular_velocity_max = 20.0
+angular_velocity_curve = SubResource("Curve_h1jas")
+radial_accel_min = -50.92
+radial_accel_max = 12.54
+radial_accel_curve = SubResource("Curve_us3so")
+scale_amount_min = 0.0
+scale_amount_max = 50.7
+scale_amount_curve = SubResource("Curve_ly70d")
+color_ramp = SubResource("Gradient_pbabq")

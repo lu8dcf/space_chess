@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://8v8r8xh5kwx0"]
+
+[ext_resource type="Script" path="res://titulo.gd" id="1_17ow2"]
+
+[node name="Panel" type="Panel"]
+offset_left = 12.0
+offset_top = 66.0
+offset_right = 71.0
+offset_bottom = 112.0
+script = ExtResource("1_17ow2")
+
+[node name="Pausa" type="Button" parent="."]
+layout_mode = 0
+offset_left = -9.0
+offset_top = -49.0
+offset_right = 76.0
+offset_bottom = -14.0
+text = "Pausa"
+
+[node name="score" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 3.0
+offset_top = 23.0
+offset_right = 54.0
+offset_bottom = 46.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="texto_score" type="Label" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 59.0
+offset_bottom = 23.0
+text = "SCORE"
+
+[node name="perdiste" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 369.0
+offset_top = 95.0
+offset_right = 448.0
+offset_bottom = 118.0
+text = "PERDISTE"
+
+[connection signal="pressed" from="Pausa" to="." method="_on_button_pressed"]
