@@ -1,7 +1,7 @@
 extends Area2D
 
 var speed = 600.0  # Velocidad del láser
-var pantalla_alto = 650 
+var pantalla_alto = 720 
 
 func _physics_process(delta):
 	position.y += speed * delta # Mover el láser hacia arriba

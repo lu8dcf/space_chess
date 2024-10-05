@@ -31,9 +31,12 @@ func _physics_process(delta):
 		pass	
 			
 			
-	if Input.is_action_just_pressed("ui_esc"): # Para pausar el juego apretando la telca "esc"
-		$"../../main/Control/Panel/Pausa".pressed()
-		pass
+	#if Input.is_action_just_pressed("ui_esc"): # Para pausar el juego apretando la telca "esc"
+		#get_tree().change_scene_to_file("res://menu/pause/pause.tscn")
+#
+		##$"../../main/Control/Panel/Pausa".pressed()
+		#pass
+		
 		
 		
 	pass

@@ -12,6 +12,7 @@ height = 46.0
 position = Vector2(619, 618)
 script = ExtResource("1_qht3x")
 explosion = ExtResource("2_g3gv4")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(2, 1)

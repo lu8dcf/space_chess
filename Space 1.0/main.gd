@@ -22,9 +22,12 @@ var planeta_x = 0.3 * pantalla_ancho # ubicacion inicial del planeta en ele eje 
 
 # Player
 var player = null
-var player2 = null
 var vidas = 8   # cantidad de vidas
 
+# Player2
+var player2 = null
+var vidas2 = 8 # cantidad de vidas
+var multi_player = false
 
 # Puntos del juego
 var score = 0 # Puntos de referencia 
@@ -40,7 +43,10 @@ func _ready():
 	inicia_planeta(planeta_x) # Instanciar planeta del fondo con movimiento
 		
 	inicia_player() # # Instanciar y añadir la nave del jugador en el punto central abajo
-	inicia_player2()
+	
+	if multi_player: # si multi_player es true, se instancia la nave 2
+		inicia_player2()
+		pass
 	
 	temporizador_agrega_enemigos() # Timer que marca los tiempos que se instancian los enemigos
 		
@@ -175,12 +181,20 @@ func _move_enemies(): # Mueve todas las naves enemigas hacia abajo cada vez que 
 	
 	# Niveles
 func _process(delta):
-	if score == 100:
-		stage_actual=2   # Cambio al nvel 2
-	elif score == 200:
-		stage_actual=3   # Cambio al nivel 3
-	elif score == 300:
-		stage_actual=4   # Cambio al nivel 4
+	if multi_player:
+		if score == 200:
+			stage_actual=2   # Cambio al nvel 2
+		elif score == 400:
+			stage_actual=3   # Cambio al nivel 3
+		elif score == 600:
+			stage_actual=4   # Cambio al nivel 4		
+	else:
+		if score == 100:
+			stage_actual=2   # Cambio al nvel 2
+		elif score == 200:
+			stage_actual=3   # Cambio al nivel 3
+		elif score == 300:
+			stage_actual=4   # Cambio al nivel 4
 	
 	if player == null and vidas>0: # Si existe el elemento
 		vidas -=1
@@ -189,6 +203,16 @@ func _process(delta):
 		perdiste_juego()
 	else:
 		pass
+		
+	# vidas del player2
+	if multi_player:
+		if player2 == null and vidas2>0: # Si existe el elemento
+			vidas2 -=1
+			inicia_player2()
+		elif player2 == null and vidas2==0 and vidas == 0:
+			perdiste_juego()
+		else:
+			pass
 			
 		
 func perdiste_juego():

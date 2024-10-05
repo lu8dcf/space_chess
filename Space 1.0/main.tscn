@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dclasu6g2as6g"]
+[gd_scene load_steps=7 format=3 uid="uid://dclasu6g2as6g"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_25upw"]
 [ext_resource type="PackedScene" uid="uid://cc6gry5jybsfx" path="res://fondo_a.tscn" id="2_iu6nv"]
 [ext_resource type="PackedScene" uid="uid://8v8r8xh5kwx0" path="res://titulo.tscn" id="3_7dbc4"]
 [ext_resource type="AudioStream" uid="uid://gp7h2010agyt" path="res://recursos/sound/Star_Wars_Main_Theme.mp3" id="4_qsox0"]
+[ext_resource type="Script" path="res://menu/pause/pause.gd" id="5_somx4"]
+[ext_resource type="Texture2D" uid="uid://bacolqswd25dm" path="res://recursos/texts/text_paused.png" id="6_dg286"]
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_25upw")
@@ -17,5 +19,34 @@ position = Vector2(-1, -4)
 stream = ExtResource("4_qsox0")
 volume_db = -13.811
 
+[node name="menu_pause" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("5_somx4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="menu_pause"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -62.0
+offset_right = 31.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="text_paused" type="Sprite2D" parent="menu_pause/VBoxContainer"]
+position = Vector2(28, -34)
+scale = Vector2(0.13468, 0.152381)
+texture = ExtResource("6_dg286")
+
+[node name="Button" type="Button" parent="menu_pause/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "MENU"
+
 [connection signal="perdiste" from="." to="Control" method="_on_main_perdiste"]
 [connection signal="score_total" from="." to="Control" method="_on_main_score_total"]
+[connection signal="pressed" from="menu_pause/VBoxContainer/Button" to="menu_pause" method="_on_button_pressed"]

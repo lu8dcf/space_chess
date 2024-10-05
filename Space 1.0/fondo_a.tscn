@@ -16,8 +16,8 @@ a = Vector2(6, 661)
 b = Vector2(0, -68)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_dmlur"]
-a = Vector2(-113, 700)
-b = Vector2(-1403, 688)
+a = Vector2(-115, 721)
+b = Vector2(-1405, 718)
 
 [node name="fondoA" type="Area2D"]
 script = ExtResource("1_uicqx")
