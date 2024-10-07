@@ -4,7 +4,7 @@ extends CharacterBody2D
 var pasos = 4  # Velocidad  del paso de referencia (similar a un "cuadro" de ajedrez)
 var move_direction = Vector2(0, 1)  # Dirección de descenso sollo en eje y
 var rand = RandomNumberGenerator.new() # semilla de random segun el tiempo
-
+@export var explosion: PackedScene  # Exporta la escena de explosión
 
 func _ready():
 	add_to_group("enemy") # Agrega al grupo enemigo para poder ser destruido por el laser player
@@ -24,13 +24,14 @@ func cambio_velocidad():
 func move_down():
 	position += move_direction * pasos
 
-# cuando el laser del player impacta en el enemigo y lo destruye
-@export var explosion: PackedScene  # Exporta la escena de explosión
+# cuando el laser del player impacta en el enemigo y lo destruye, sonido y animaciom
+
 func _pego_el_laser():
-	var explosion_instance = explosion.instantiate() # Instanciar la escena de explosión
+	# Instanciar la escena de explosión
+	var explosion_instance = explosion.instantiate()
 	explosion_instance.position = position  # Colocar la explosión en la posición del enemigo
-	get_parent().add_child(explosion_instance) # Agregar de hijo 
-	explosion_instance.emitting = true  # Iniciar la emisión de partículas
+	get_parent().add_child(explosion_instance)
+	explosion_instance.emitting = true
 	
 # Destruir el enemigo y player con el que colisiona
 func _on_area_2d_body_entered(body):

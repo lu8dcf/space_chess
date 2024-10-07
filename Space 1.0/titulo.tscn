@@ -9,14 +9,6 @@ offset_right = 71.0
 offset_bottom = 112.0
 script = ExtResource("1_17ow2")
 
-[node name="Pausa" type="Button" parent="."]
-layout_mode = 0
-offset_left = -9.0
-offset_top = -49.0
-offset_right = 76.0
-offset_bottom = -14.0
-text = "Pausa"
-
 [node name="score" type="Label" parent="."]
 z_index = 10
 layout_mode = 0
@@ -43,5 +35,3 @@ offset_top = 95.0
 offset_right = 448.0
 offset_bottom = 118.0
 text = "PERDISTE"
-
-[connection signal="pressed" from="Pausa" to="." method="_on_button_pressed"]

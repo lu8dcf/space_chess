@@ -32,12 +32,13 @@ func move_down():
 	cantidad_pasos +=1		# suma un paso
 	position += move_direction * pasos
 
-@export var explosion: PackedScene  # Exporta la escena de explosión
+@export var explosion_enemigo: PackedScene  # Exporta la escena de explosión
 func _pego_el_laser():
-	var explosion_instance = explosion.instantiate() # Instanciar la escena de explosión
-	explosion_instance.position = position  # Colocar la explosión en la posición del enemigo
-	get_parent().add_child(explosion_instance) # Agregar de hijo 
-	explosion_instance.emitting = true  # Iniciar la emisión de partículas
+	#var explosion_instance = explosion_enemigo.instantiate() # Instanciar la escena de explosión
+	#explosion_instance.position = position  # Colocar la explosión en la posición del enemigo
+	#get_parent().add_child(explosion_instance) # Agregar de hijo 
+	#explosion_instance.emitting = true  # Iniciar la emisión de partículas
+	pass
 	
 	
 func _on_area_2d_body_entered(body):

@@ -8,12 +8,12 @@ var rand = RandomNumberGenerator.new() # semilla de random segun el tiempo
 # Enemigos
 var enemies = []  # Almacenará las instancias de enemigos
 var movimiento_enemigo = 0.05  # Intervalo de tiempo para el movimiento enemigo
-var timer_aparece_enemigo = 1 # 1seg Intervalo que aparecen los enemigos
+var timer_aparece_enemigo = .5 # 1seg Intervalo que aparecen los enemigos
 var boss_activo=0 # Bandera para Agregar secuaces al BOSS
 
 # Rocas
 var rocas = [] # Almacena las instancias de las rocas
-var timer_aparece_rocas = 1 # 1 seg Intervalo que aparecen los enemigos
+var timer_aparece_rocas = .5 # 1 seg Intervalo que aparecen los enemigos
 
 # Fondo
 var planetas = [] # planetas del fondo
@@ -33,12 +33,22 @@ var multi_player = false
 var score = 0 # Puntos de referencia 
 var stage_actual = 1
 signal score_total
-signal stage
+signal stage # Indicador de Stage actual
 signal perdiste
+var stage_anterior = 0 #Inicio de la partida
 
+# varaibles de menu_text_stages
+var popup_panel
+var timer
 
 func _ready():
+	# Conectar la señal de multijugador
+	GlobalSettings.connect("game_multiplayer_main", Callable(self, "_on_check_multiplayer_toggled"))
 	
+	popup_panel = $menu_text_stages
+	timer = $Timer
+	# Conecta la señal timeout del Timer
+	timer.timeout.connect(_on_timer_timeout)
 		
 	inicia_planeta(planeta_x) # Instanciar planeta del fondo con movimiento
 		
@@ -55,7 +65,32 @@ func _ready():
 	temporizador_mueve_enemigos() # Timer para controlar el movimiento de las naves enemigas
 	
 	musica_juego()	
+
 	
+
+func visible_popup(text):
+	# Configurar texto
+	#popup_panel.get_node("Label").text = text
+	#Mostrar el popup
+	popup_panel.popup_centered()
+	# Iniciar timer
+	timer.start()
+	timer.wait_time=3
+	
+	
+func _on_timer_timeout():
+	popup_panel.hide()
+	
+# Función para el callback de multijugador
+func _on_check_multiplayer_toggled(toggle: bool):
+	print("¡Se ha activado la función de multijugador! main")
+	multi_player = toggle
+	if multi_player and player2 == null:
+		inicia_player2()  # Instanciar jugador 2 si no está ya presente
+	elif not multi_player and player2 != null:
+		player2.queue_free()  # Eliminar el jugador 2 si se desactiva el multijugador
+		player2 = null
+		
 func inicia_planeta(ubicacion_x): # Instanciar planeta
 	planeta = preload("res://planeta.tscn").instantiate()
 	planeta.position = Vector2(planeta_x,0)  # Colocar al planeta en la parte superioir fuera a un cuato de X
@@ -82,12 +117,12 @@ func temporizador_agrega_enemigos():
 	
 func _aparece_enemies():
 	var posicion_x = randf_range(100, pantalla_ancho-100) # Rando en X del aparicion del enemigo en el ancho d ela pantalla
-	
 	#boss_activo =0 inicia el Boss
 	#boss_activo 1,2 o 3 , agrega diferentes enemigos con el boss
 	
 	# Nivel 1 - solo peones
 	if stage_actual == 1 or boss_activo == 1:
+		visible_popup("STAGE 1")
 		var enemy = preload("res://enemy.tscn").instantiate()
 		enemy.position = Vector2(posicion_x, 0) # Ubica al enemigo en la X random e Y en el inicio
 		add_child(enemy)  # Agrega como hijo del main al enemigo
@@ -118,7 +153,6 @@ func _aparece_enemies():
 	# genera la opcion de enemigo que acompaña al boss  
 	if stage_actual == 4 and boss_activo != 0:
 		boss_activo = rand.randi_range(1, 3)  # Genera un número entre 1  y 3 (inclusive)
-		
 	
 	
 func temporizador_agrega_rocas():
@@ -195,6 +229,27 @@ func _process(delta):
 			stage_actual=3   # Cambio al nivel 3
 		elif score == 300:
 			stage_actual=4   # Cambio al nivel 4
+			
+	# cambio de nivel
+	if stage_actual!=stage_anterior:
+		emit_signal("stage",stage_actual) # Señal que cambia el finde de la pantalla
+		
+		# al Cambiar de nivel elimina todas las instancias de enemigos
+		
+		for i in range(rocas.size() - 1, -1, -1):  # Iterar en orden inverso
+			var rocaD = rocas[i]
+			if is_instance_valid(rocaD):  # Verifica si el enemigo aún es válido
+				rocaD.queue_free()  # Elimina del árbol de nodos
+				rocas.erase(rocaD)  # Elimina de la lista de enemigos
+		rocas=[]
+		for i in range(enemies.size() - 1, -1, -1):  # Iterar en orden inverso
+			var enemy = enemies[i]
+			if is_instance_valid(enemy):  # Verifica si el enemigo aún es válido
+				enemy.queue_free()  # Elimina del árbol de nodos
+				enemies.erase(enemy)  # Elimina de la lista de enemigos
+		enemies=[]
+			
+		stage_anterior=stage_actual
 	
 	if player == null and vidas>0: # Si existe el elemento
 		vidas -=1

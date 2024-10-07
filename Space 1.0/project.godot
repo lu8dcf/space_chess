@@ -16,10 +16,15 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/image="res://recursos/fondo/splash_screen.png"
 config/icon="res://icon.svg"
 
+[autoload]
+
+GlobalSettings="*res://menu/main/scripts/global_settings.gd"
+
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="viewport"
 
 [input]
 

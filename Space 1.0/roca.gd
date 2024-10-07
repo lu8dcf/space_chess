@@ -7,10 +7,10 @@ func _ready():
 func _physics_process(delta):
 	gravity_scale = 0.01
 
-@export var explosion: PackedScene  # Exporta la escena de explosión
+@export var explosion_enemy: PackedScene  # Exporta la escena de explosión
 func _pego_el_laser():
 	# Instanciar la escena de explosión
-	var explosion_instance = explosion.instantiate()
+	var explosion_instance = explosion_enemy.instantiate()
 	explosion_instance.position = position  # Colocar la explosión en la posición del enemigo
 	get_parent().add_child(explosion_instance)
 	explosion_instance.emitting = true

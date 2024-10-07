@@ -1,7 +1,7 @@
 extends Area2D
 
 var speed = 600.0  # Velocidad del láser
-var tiempo_sonido = .4
+var tiempo_sonido = .2
 
 func _ready():
 	$laser.play() # Sonido del laser a disparar
@@ -23,14 +23,4 @@ func _on_body_entered(body):
 	elif body.is_in_group("enemy"):
 		body._pego_el_laser()  # Llama a la función que maneja la destrucción
 		body.queue_free()  # Elimina el objeto enemigo
-		$explosion_enemy.play()
-		# Iniciar un timer para esperar antes de eliminar el láser
-		await get_tree().create_timer(tiempo_sonido).timeout  # Esperar el tiempo de cooldown
 		queue_free()  # Elimina el láser
-		
-
-	
-
-	
-		
-				

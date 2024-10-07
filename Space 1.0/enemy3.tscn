@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://kt8m7wbc40kv"]
 
 [ext_resource type="Script" path="res://enemy3.gd" id="1_ciik1"]
+[ext_resource type="PackedScene" uid="uid://bq4e0eqxpb0ke" path="res://explosion_enemigo.tscn" id="2_4gouq"]
 [ext_resource type="Texture2D" uid="uid://71iuqjngjorp" path="res://recursos/enemy/enemy3.png" id="2_cgxwf"]
-[ext_resource type="PackedScene" uid="uid://r1ffid4t73c8" path="res://explosion.tscn" id="2_ojyrl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hsxkc"]
 radius = 19.0
@@ -11,7 +11,7 @@ height = 38.0
 [node name="Enemigos3" type="CharacterBody2D" groups=["enemy"]]
 position = Vector2(-23, -43)
 script = ExtResource("1_ciik1")
-explosion = ExtResource("2_ojyrl")
+explosion_enemigo = ExtResource("2_4gouq")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]

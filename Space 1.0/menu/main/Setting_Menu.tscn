@@ -1,9 +1,201 @@
-[gd_scene format=3 uid="uid://bkipu72p7cbq6"]
+[gd_scene load_steps=4 format=3 uid="uid://bkipu72p7cbq6"]
+
+[ext_resource type="Script" path="res://menu/main/scripts/setting_menu.gd" id="1_iqy3a"]
+[ext_resource type="FontFile" uid="uid://mjadfyp75mk6" path="res://recursos/tipografy/Lato-Regular.ttf" id="2_cj0ok"]
+
+[sub_resource type="FontVariation" id="FontVariation_ckbuj"]
+base_font = ExtResource("2_cj0ok")
 
 [node name="SettingMenu" type="Popup"]
+position = Vector2i(750, 380)
+size = Vector2i(500, 300)
 visible = true
+script = ExtResource("1_iqy3a")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.192736, 0.0374755, 0.389712, 0.541176)
+
+[node name="settings_tabs" type="TabContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_right = 40.0
 offset_bottom = 40.0
-color = Color(0.13717, 0.0203, 0.29, 0.541176)
+current_tab = 0
+
+[node name="Video" type="TabBar" parent="settings_tabs"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="settings_tabs/Video"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="video_settings" type="GridContainer" parent="settings_tabs/Video/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 130
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="display_mode" type="Label" parent="settings_tabs/Video/MarginContainer/video_settings"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_ckbuj")
+theme_override_font_sizes/font_size = 29
+text = "Display Mode"
+
+[node name="OptionButton" type="OptionButton" parent="settings_tabs/Video/MarginContainer/video_settings"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_fonts/font = ExtResource("2_cj0ok")
+theme_override_font_sizes/font_size = 24
+selected = 0
+item_count = 2
+popup/item_0/text = "Windowed"
+popup/item_0/id = 1
+popup/item_1/text = "Fullscreen"
+popup/item_1/id = 2
+
+[node name="Audio" type="TabBar" parent="settings_tabs"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="settings_tabs/Audio"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="audio_settings" type="GridContainer" parent="settings_tabs/Audio/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="audio_label1" type="Label" parent="settings_tabs/Audio/MarginContainer/audio_settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("FontVariation_ckbuj")
+theme_override_font_sizes/font_size = 29
+text = "Master Volume"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="settings_tabs/Audio/MarginContainer/audio_settings"]
+layout_mode = 2
+
+[node name="master_slider" type="HSlider" parent="settings_tabs/Audio/MarginContainer/audio_settings/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+min_value = -50.0
+max_value = 70.0
+value = 20.0
+rounded = true
+
+[node name="audio_label2" type="Label" parent="settings_tabs/Audio/MarginContainer/audio_settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("FontVariation_ckbuj")
+theme_override_font_sizes/font_size = 29
+text = "Music Volume"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="settings_tabs/Audio/MarginContainer/audio_settings"]
+layout_mode = 2
+
+[node name="music_slider" type="HSlider" parent="settings_tabs/Audio/MarginContainer/audio_settings/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+min_value = -50.0
+value = 50.0
+rounded = true
+
+[node name="audio_label3" type="Label" parent="settings_tabs/Audio/MarginContainer/audio_settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("FontVariation_ckbuj")
+theme_override_font_sizes/font_size = 29
+text = "SFX Volume"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="settings_tabs/Audio/MarginContainer/audio_settings"]
+layout_mode = 2
+
+[node name="sfx_slider" type="HSlider" parent="settings_tabs/Audio/MarginContainer/audio_settings/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+min_value = -50.0
+value = 50.0
+rounded = true
+
+[node name="Game Mode" type="TabBar" parent="settings_tabs"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="settings_tabs/Game Mode"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="game_settings" type="GridContainer" parent="settings_tabs/Game Mode/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 90
+columns = 2
+
+[node name="gameplay_label1" type="Label" parent="settings_tabs/Game Mode/MarginContainer/game_settings"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_ckbuj")
+theme_override_font_sizes/font_size = 29
+text = "Multiplayer"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="settings_tabs/Game Mode/MarginContainer/game_settings"]
+layout_mode = 2
+
+[node name="check_multiplayer" type="CheckButton" parent="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+
+[node name="gameplay_label2" type="Label" parent="settings_tabs/Game Mode/MarginContainer/game_settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("FontVariation_ckbuj")
+theme_override_font_sizes/font_size = 29
+text = "Mouse Sensitivity"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="settings_tabs/Game Mode/MarginContainer/game_settings"]
+layout_mode = 2
+
+[node name="gameplay_label3" type="Label" parent="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("FontVariation_ckbuj")
+theme_override_font_sizes/font_size = 17
+text = ".1"
+
+[node name="mouse_slider" type="HSlider" parent="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+min_value = 0.05
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[connection signal="item_selected" from="settings_tabs/Video/MarginContainer/video_settings/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="value_changed" from="settings_tabs/Audio/MarginContainer/audio_settings/HBoxContainer/master_slider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="settings_tabs/Audio/MarginContainer/audio_settings/HBoxContainer2/music_slider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="settings_tabs/Audio/MarginContainer/audio_settings/HBoxContainer3/sfx_slider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer4/check_multiplayer" to="." method="_on_check_multiplayer_pressed"]
+[connection signal="toggled" from="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer4/check_multiplayer" to="." method="_on_check_multiplayer_toggled"]
+[connection signal="value_changed" from="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer3/mouse_slider" to="." method="_on_mouse_slider_value_changed"]

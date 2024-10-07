@@ -1,13 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvricas5e7cbo"]
+[gd_scene load_steps=15 format=3 uid="uid://dvricas5e7cbo"]
 
 [ext_resource type="Script" path="res://menu/main/scripts/menu_main.gd" id="1_qewvt"]
-[ext_resource type="Texture2D" uid="uid://cu15r2f4jx5b4" path="res://recursos/fondo/720.png" id="2_5ixla"]
+[ext_resource type="AudioStream" uid="uid://cd2vey0n7883" path="res://recursos/sound/intro.mp3" id="2_kqo7t"]
+[ext_resource type="Texture2D" uid="uid://d17vabpxl08it" path="res://recursos/fondo/splash_screen.png" id="3_ijy30"]
 [ext_resource type="Texture2D" uid="uid://sjalmbsiaoct" path="res://menu/button/play.png" id="3_sp5ls"]
+[ext_resource type="AudioStream" uid="uid://bor8nyjm32k2a" path="res://recursos/sound/button.mp3" id="4_88gsp"]
 [ext_resource type="Texture2D" uid="uid://bn8gt86ujaoh5" path="res://menu/button/play_press.png" id="4_iv5vv"]
 [ext_resource type="Texture2D" uid="uid://b0htlm8djib1s" path="res://menu/button/options.png" id="5_d1af0"]
 [ext_resource type="Texture2D" uid="uid://c1j062s4aencg" path="res://menu/button/options_press.png" id="6_k0xnh"]
 [ext_resource type="Texture2D" uid="uid://dyqedcbp5fa2" path="res://menu/button/quit.png" id="7_0i1uf"]
+[ext_resource type="Texture2D" uid="uid://qmx1xglr500b" path="res://menu/button/play_hover.png" id="7_rhyi3"]
 [ext_resource type="Texture2D" uid="uid://vydn6p3hqqgk" path="res://menu/button/quit_press.png" id="8_pdaxx"]
+[ext_resource type="Texture2D" uid="uid://c2qx1o1fru5t2" path="res://menu/button/options_hover.png" id="10_t20ad"]
+[ext_resource type="Texture2D" uid="uid://ba3bvgc8c1b4m" path="res://menu/button/quit_hover.png" id="12_utdsh"]
+[ext_resource type="PackedScene" uid="uid://bkipu72p7cbq6" path="res://menu/main/Setting_Menu.tscn" id="14_v6ndh"]
 
 [node name="Menu Main" type="Control"]
 layout_mode = 3
@@ -18,22 +24,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qewvt")
 
+[node name="sound_intro" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_kqo7t")
+bus = &"Music"
+
 [node name="Background" type="Node2D" parent="."]
 scale = Vector2(0.6, 0.6)
 
 [node name="image_back" type="Sprite2D" parent="Background"]
-position = Vector2(1075.83, 608.333)
-scale = Vector2(1.68099, 1.68519)
-texture = ExtResource("2_5ixla")
-
-[node name="Tittle" type="Label" parent="."]
-layout_mode = 0
-offset_left = 52.0
-offset_top = 57.0
-offset_right = 347.0
-offset_bottom = 126.0
-theme_override_font_sizes/font_size = 50
-text = "Space Chess"
+position = Vector2(1068.33, 603.333)
+scale = Vector2(1.90264, 1.90401)
+texture = ExtResource("3_ijy30")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -42,27 +43,37 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -159.0
-offset_top = -344.0
-offset_right = 159.0
+offset_left = -160.0
+offset_top = -307.0
+offset_right = 158.0
+offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(0.9, 0.9)
+scale = Vector2(0.8, 0.8)
+
+[node name="buttons" type="AudioStreamPlayer2D" parent="VBoxContainer"]
+stream = ExtResource("4_88gsp")
 
 [node name="play" type="TextureButton" parent="VBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("3_sp5ls")
 texture_pressed = ExtResource("4_iv5vv")
+texture_hover = ExtResource("7_rhyi3")
 
 [node name="options" type="TextureButton" parent="VBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("5_d1af0")
 texture_pressed = ExtResource("6_k0xnh")
+texture_hover = ExtResource("10_t20ad")
 
 [node name="quit" type="TextureButton" parent="VBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("7_0i1uf")
 texture_pressed = ExtResource("8_pdaxx")
+texture_hover = ExtResource("12_utdsh")
+
+[node name="SettingMenu" parent="." instance=ExtResource("14_v6ndh")]
+visible = false
 
 [connection signal="pressed" from="VBoxContainer/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="VBoxContainer/options" to="." method="_on_options_pressed"]

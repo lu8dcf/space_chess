@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://53bou81b5eal"]
+
+[ext_resource type="Script" path="res://explosion.gd" id="1_qfofq"]
+[ext_resource type="AudioStream" uid="uid://c2ga1475rnhn5" path="res://recursos/sound/explosion_enemigo.mp3" id="2_jkrvl"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jmkqp"]
+
+[sub_resource type="Curve" id="Curve_6frr6"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.284264, 35.6044), 0.0, 0.0, 0, 0, Vector2(0.492386, 178.022), 0.0, 0.0, 0, 0, Vector2(0.705584, 344.176), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_daqru"]
+colors = PackedColorArray(0.890196, 0, 0, 1, 0.902656, 0.84517, 0.0230573, 1)
+metadata/_snap_enabled = true
+
+[node name="explosion_enemigo" type="CPUParticles2D"]
+material = SubResource("CanvasItemMaterial_jmkqp")
+position = Vector2(10, -2)
+emitting = false
+amount = 50
+lifetime = 4.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 1.0
+fract_delta = false
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 150.0
+initial_velocity_max = 400.0
+angular_velocity_min = 20.0
+angular_velocity_max = 20.0
+angular_velocity_curve = SubResource("Curve_6frr6")
+scale_amount_min = 6.0
+scale_amount_max = 6.0
+color = Color(0.396078, 0.635294, 0.431373, 1)
+color_ramp = SubResource("Gradient_daqru")
+anim_speed_max = 18.0
+script = ExtResource("1_qfofq")
+
+[node name="sonido_explosion_enemigo" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_jkrvl")

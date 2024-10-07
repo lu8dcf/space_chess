@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://cc6gry5jybsfx"]
+[gd_scene load_steps=8 format=3 uid="uid://cc6gry5jybsfx"]
 
 [ext_resource type="Script" path="res://fondo_a.gd" id="1_uicqx"]
-[ext_resource type="Texture2D" uid="uid://db0ledfe31ch1" path="res://recursos/fondo_movil/capasnave.png" id="2_6qu1g"]
 [ext_resource type="Script" path="res://estrellas.gd" id="3_6kuxv"]
 [ext_resource type="Texture2D" uid="uid://joq5yffsvfdn" path="res://recursos/fondo_movil/planeta2.png" id="3_iyypv"]
 
@@ -22,20 +21,19 @@ b = Vector2(-1405, 718)
 [node name="fondoA" type="Area2D"]
 script = ExtResource("1_uicqx")
 
-[node name="Fondo_Azul" type="Sprite2D" parent="."]
-position = Vector2(639.228, 360)
-scale = Vector2(1.00981, 0.371)
-texture = ExtResource("2_6qu1g")
+[node name="Fondo" type="Sprite2D" parent="."]
+position = Vector2(639.228, 374.5)
+scale = Vector2(1.00981, 1.04861)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-66, -5)
 shape = SubResource("SegmentShape2D_jgr0k")
 
-[node name="estrellas" type="RigidBody2D" parent="."]
+[node name="star" type="RigidBody2D" parent="."]
 mass = 0.003
 script = ExtResource("3_6kuxv")
 
-[node name="Sprite2D" type="Sprite2D" parent="estrellas"]
+[node name="Sprite2D" type="Sprite2D" parent="star"]
 position = Vector2(643, -1384)
 scale = Vector2(1.01486, 2.117)
 texture = ExtResource("3_iyypv")

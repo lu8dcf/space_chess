@@ -3,6 +3,7 @@ extends CharacterBody2D
 # Propiedades de la Nave
 var speed = 500.0 # velocidad de movimiento de la nave
 var direction = Vector2.ZERO
+var mouse_sensitivy = 0.1
 
 # Propiedades del Disparo laser
 var laser_scene = preload("res://laser.tscn")  # Cargar la escena del láser
@@ -18,12 +19,11 @@ var pantalla_ancho = 1280
 var switch_keyboard_mouse = "mouse"
 
 
-
 func _physics_process(delta):
 	# depende de lo que elija el jugador, se ejecutara el movimiento con teclado o con mouse.
+		
 	if switch_keyboard_mouse == "keyboard":
 		move_with_keyboard();
-		mueve_la_nave();
 		shoot_with_key();
 	elif switch_keyboard_mouse == "mouse":
 		move_with_mouse();
@@ -34,7 +34,7 @@ func _physics_process(delta):
 	#if Input.is_action_just_pressed("ui_esc"): # Para pausar el juego apretando la telca "esc"
 		#get_tree().change_scene_to_file("res://menu/pause/pause.tscn")
 #
-		##$"../../main/Control/Panel/Pausa".pressed()
+		# $"../../main/Control/Panel/Pausa".pressed()
 		#pass
 		
 		
@@ -43,7 +43,6 @@ func _physics_process(delta):
 
 #Movimiento y disparo con teclas
 func move_with_keyboard():
-	
 	if Input.is_action_pressed("ui_up") and position.y > 10:
 		direction.y -= 1
 	if Input.is_action_pressed("ui_down") and position.y < pantalla_alto -20:
@@ -52,8 +51,8 @@ func move_with_keyboard():
 		direction.x -= 1
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
-	
-	 # Aplica el movimiento
+	 # Aplica el movimiento		
+	mueve_la_nave();
 	pass
 func shoot_with_key():
 	if Input.is_action_just_pressed("ui_r") and can_shoot:  # disparo con la telca R
@@ -68,10 +67,14 @@ func mueve_la_nave(): # Normalizar y aplicar movimiento
 #Movimiento y disparo con mouse
 func move_with_mouse(): #mover la nave con el mouse
 	var main = $"../../main"
-	position = main.get_local_mouse_position() # Asingna la posicion de la nave con respecto al mouse
+	var mouse_position = main.get_local_mouse_position()
+	var new_position = position + (mouse_position - position) * mouse_sensitivy
+	position = new_position# Asingna la posicion de la nave con respecto al mouse
 	position.x = clamp (position.x,20, pantalla_ancho*0.94) # Limite de movimientos en ancho de pantalla
 	position.y = clamp (position.y,10, pantalla_alto*0.95) # Limite de movimientos en altoo de pantalla
-	Input.set_custom_mouse_cursor(load("res://recursos/cursor/point.png")) #ocultar el cursor
+	
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) #FUNCION QUE SIRVE PARA ocultar el cursor
+	
 	pass
 func shoot_with_click():
 	if Input.is_action_just_pressed("ui_click_izq") and can_shoot:  # disparo con el mouse 
@@ -100,4 +103,3 @@ func _choco_player():
 	explosion_instance.position = position  # Colocar la explosión en la posición del player
 	get_parent().add_child(explosion_instance)
 	explosion_instance.emitting = true
-	

@@ -1,4 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://v50j6nufhptt"]
+[gd_scene load_steps=7 format=3 uid="uid://v50j6nufhptt"]
+
+[ext_resource type="Script" path="res://explosion_player.gd" id="1_4xs12"]
+[ext_resource type="AudioStream" uid="uid://c2ga1475rnhn5" path="res://recursos/sound/explosion_enemigo.mp3" id="2_opmsb"]
 
 [sub_resource type="Curve" id="Curve_h1jas"]
 min_value = -360.0
@@ -6,21 +9,23 @@ max_value = 360.0
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.147059, -90.989), 0.0, 0.0, 0, 0, Vector2(0.235294, 59.3407), 0.0, 0.0, 0, 0, Vector2(0.333333, -130.549), 0.0, 0.0, 0, 0, Vector2(0.357843, 241.319), 0.0, 0.0, 0, 0, Vector2(0.426471, -225.495), 0.0, 0.0, 0, 0, Vector2(0.446078, 83.0769), 0.0, 0.0, 0, 0, Vector2(0.656863, 360), 0.0, 0.0, 0, 0, Vector2(0.79902, 360), 0.0, 0.0, 0, 0, Vector2(0.985294, 320.44), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 11
 
-[sub_resource type="Curve" id="Curve_us3so"]
+[sub_resource type="Curve" id="Curve_ju82a"]
 min_value = -200.0
 max_value = 200.0
-_data = [Vector2(0.0196078, 10.989), 0.0, 0.0, 0, 0, Vector2(0.215686, 142.857), 0.0, 0.0, 0, 0, Vector2(0.328431, -41.7582), 0.0, 0.0, 0, 0, Vector2(0.436275, 94.5055), 0.0, 0.0, 0, 0, Vector2(0.710784, -76.9231), 0.0, 0.0, 0, 0, Vector2(0.843137, 129.67), 0.0, 0.0, 0, 0]
-point_count = 6
+_data = [Vector2(0.0192308, 33.8658), 0.0, 824.63, 0, 0, Vector2(0.307692, 200), 0.0, 0.0, 0, 0, Vector2(0.373077, -78.2747), 0.0, 0.0, 0, 0, Vector2(0.538462, 200), 0.0, 0.0, 0, 0, Vector2(0.742308, -140.575), 0.0, 0.0, 0, 0, Vector2(0.784615, -190.415), 0.0, 0.0, 0, 0, Vector2(0.892308, -200), 0.0, 0.0, 0, 0, Vector2(1, -200), 0.0, 0.0, 0, 0]
+point_count = 8
 
-[sub_resource type="Curve" id="Curve_ly70d"]
-_data = [Vector2(0.0735294, 1), 0.0, 0.0, 0, 0, Vector2(0.191176, 0.131868), 0.0, 0.0, 0, 0, Vector2(0.328431, 0.846154), 0.0, 0.0, 0, 0, Vector2(0.485294, 0.362637), 0.0, 0.0, 0, 0, Vector2(0.730392, 0.901099), 0.0, 0.0, 0, 0, Vector2(0.921569, 0.021978), 0.0, 0.0, 0, 0]
-point_count = 6
+[sub_resource type="Curve" id="Curve_sixob"]
+_data = [Vector2(0.130769, 0.574281), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_pbabq"]
-offsets = PackedFloat32Array(0, 0.153409, 0.375, 0.539773, 0.75, 0.903409)
-colors = PackedColorArray(0.905882, 0, 0, 1, 0.572893, 0.531486, 0.269222, 1, 0.541823, 0.346579, 0.0716977, 1, 0.835294, 0.0313726, 0.027451, 1, 0.904435, 0.503338, 0.177361, 1, 1, 1, 0.054902, 1)
+interpolation_mode = 2
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0.012931, 0.12069, 0.375, 0.539773, 0.676724, 0.866379)
+colors = PackedColorArray(1, 1, 0.054902, 1, 0.964316, 0.959098, 0.0571407, 1, 0.835294, 0.0313726, 0.027451, 1, 0.869, 0.262, 0.101, 0.706, 0.904, 0.503, 0.177, 0.671, 0.766, 0.603, 0.019, 0.5)
 
-[node name="CPUParticles2D" type="CPUParticles2D"]
+[node name="explosion_player" type="CPUParticles2D"]
 emitting = false
 amount = 54
 lifetime = 4.0
@@ -29,17 +34,21 @@ preprocess = 1.0
 explosiveness = 1.0
 randomness = 1.0
 fract_delta = false
-spread = 180.0
+spread = 65.09
 gravity = Vector2(0, 45)
 initial_velocity_min = 3.85
 initial_velocity_max = 348.08
 angular_velocity_min = 20.0
 angular_velocity_max = 20.0
 angular_velocity_curve = SubResource("Curve_h1jas")
-radial_accel_min = -50.92
-radial_accel_max = 12.54
-radial_accel_curve = SubResource("Curve_us3so")
+radial_accel_min = -70.8
+radial_accel_max = 0.42
+radial_accel_curve = SubResource("Curve_ju82a")
 scale_amount_min = 0.0
 scale_amount_max = 50.7
-scale_amount_curve = SubResource("Curve_ly70d")
+scale_amount_curve = SubResource("Curve_sixob")
 color_ramp = SubResource("Gradient_pbabq")
+script = ExtResource("1_4xs12")
+
+[node name="sonido_explosion_player" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_opmsb")

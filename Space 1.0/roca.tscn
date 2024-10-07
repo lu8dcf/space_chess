@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" path="res://roca.gd" id="1_qtass"]
 [ext_resource type="Texture2D" uid="uid://pp3cxljcjspn" path="res://recursos/roca.png" id="2_5850o"]
-[ext_resource type="PackedScene" uid="uid://r1ffid4t73c8" path="res://explosion.tscn" id="2_y775n"]
+[ext_resource type="PackedScene" uid="uid://bq4e0eqxpb0ke" path="res://explosion_enemigo.tscn" id="2_thkb6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5smq"]
 size = Vector2(22, 20)
 
 [node name="roca" type="RigidBody2D" groups=["enemy"]]
 script = ExtResource("1_qtass")
-explosion = ExtResource("2_y775n")
+explosion_enemy = ExtResource("2_thkb6")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

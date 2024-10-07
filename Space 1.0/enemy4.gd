@@ -45,7 +45,7 @@ func move_down():
 	cantidad_pasos +=1		
 	position += move_direction * pasos
 
-@export var explosion: PackedScene  # Exporta la escena de explosión boss
+@export var explosion_enemigo: PackedScene  # Exporta la escena de explosión boss
 @export var pego_laser: PackedScene  # Exporta la escena de lcada laser que pega en el boss
 func _pego_el_laser():
 	
@@ -59,7 +59,7 @@ func _pego_el_laser():
 	if vida_boss == 0:
 		#body.queue_free()  # Elimina el boss enemigo
 		queue_free()  # Elimina el láser
-		var explosion_boss = explosion.instantiate() # Instanciar la escena de explosión
+		var explosion_boss = explosion_enemigo.instantiate() # Instanciar la escena de explosión
 		explosion_boss.position = position  # Colocar la explosión en la posición del enemigo
 		get_parent().add_child(explosion_boss) # Agregar de hijo 
 		explosion_boss.emitting = true  # Iniciar la emisión de partículas
