@@ -2,8 +2,10 @@ extends Node
 
 #signal brightness_updated(value)
 signal mouse_sens_updated(value)
-signal game_multiplayer(value)
 signal game_multiplayer_main(value)
+
+var game_multiplayer = false
+var mouse_sens = 0.05
 # funciones de video
 
 func change_display_mode(toggle: bool):
@@ -28,9 +30,11 @@ func update_master_vol(bus_inx, vol):
 	
 # funciones de gameplay
 func game_mode_multiplayer(toggle):
-	emit_signal("game_multiplayer",toggle)
 	emit_signal("game_multiplayer_main",toggle)
+	game_multiplayer = toggle
+	
 	
 	
 func update_mouse_sens(value):
 	emit_signal("mouse_sens_updated", value)
+	mouse_sens = value

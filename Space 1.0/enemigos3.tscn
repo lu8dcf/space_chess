@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://enemy2.gd" id="1_2buxd"]
 [ext_resource type="PackedScene" uid="uid://r1ffid4t73c8" path="res://explosion.tscn" id="2_15ew2"]
-[ext_resource type="Texture2D" uid="uid://dpho4jp0mge3q" path="res://recursos/enemy2.png" id="3_n025t"]
+[ext_resource type="Texture2D" uid="uid://dpho4jp0mge3q" path="res://recursos/enemy/enemy2.png" id="3_n025t"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hsxkc"]
 radius = 26.0

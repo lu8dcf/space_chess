@@ -53,6 +53,7 @@ scale = Vector2(0.8, 0.8)
 
 [node name="buttons" type="AudioStreamPlayer2D" parent="VBoxContainer"]
 stream = ExtResource("4_88gsp")
+bus = &"SFX"
 
 [node name="play" type="TextureButton" parent="VBoxContainer"]
 layout_mode = 2

@@ -3,7 +3,9 @@ extends CharacterBody2D
 # Propiedades de la Nave
 var speed = 500.0 # velocidad de movimiento de la nave
 var direction = Vector2.ZERO
-var mouse_sensitivy = 0.1
+
+#var mouse_sensitivy = 0.1
+var mouse_sensitivy = GlobalSettings.mouse_sens # se utiliza la variable global que se modifica en el menu de opciones
 
 # Propiedades del Disparo laser
 var laser_scene = preload("res://laser.tscn")  # Cargar la escena del láser
@@ -16,19 +18,25 @@ var can_shoot = true
 # Propiedades de la Pantalla y dispositivos
 var pantalla_alto = 720
 var pantalla_ancho = 1280
-var switch_keyboard_mouse = "mouse"
+var switch_keyboard_mouse = true # si es true es teclado, si es false son teclas
+
+
 
 
 func _physics_process(delta):
 	# depende de lo que elija el jugador, se ejecutara el movimiento con teclado o con mouse.
+	if switch_keyboard_mouse:
 		
-	if switch_keyboard_mouse == "keyboard":
+		move_with_mouse();
+		shoot_with_click();			
+		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+		#Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)	
+	else:
 		move_with_keyboard();
 		shoot_with_key();
-	elif switch_keyboard_mouse == "mouse":
-		move_with_mouse();
-		shoot_with_click();	
-		pass	
+	
+	pass	
+
 			
 			
 	#if Input.is_action_just_pressed("ui_esc"): # Para pausar el juego apretando la telca "esc"
@@ -54,6 +62,11 @@ func move_with_keyboard():
 	 # Aplica el movimiento		
 	mueve_la_nave();
 	pass
+	
+	
+
+
+
 func shoot_with_key():
 	if Input.is_action_just_pressed("ui_r") and can_shoot:  # disparo con la telca R
 		_fire_laser()	 # Disparo del laser
@@ -66,13 +79,13 @@ func mueve_la_nave(): # Normalizar y aplicar movimiento
 
 #Movimiento y disparo con mouse
 func move_with_mouse(): #mover la nave con el mouse
-	var main = $"../../main"
-	var mouse_position = main.get_local_mouse_position()
+	
+	var mouse_position = get_viewport().get_mouse_position()
 	var new_position = position + (mouse_position - position) * mouse_sensitivy
 	position = new_position# Asingna la posicion de la nave con respecto al mouse
 	position.x = clamp (position.x,20, pantalla_ancho*0.94) # Limite de movimientos en ancho de pantalla
 	position.y = clamp (position.y,10, pantalla_alto*0.95) # Limite de movimientos en altoo de pantalla
-	
+
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) #FUNCION QUE SIRVE PARA ocultar el cursor
 	
 	pass
@@ -80,6 +93,8 @@ func shoot_with_click():
 	if Input.is_action_just_pressed("ui_click_izq") and can_shoot:  # disparo con el mouse 
 		_fire_laser()	 # Disparo del laser
 	pass
+
+
 
 
 

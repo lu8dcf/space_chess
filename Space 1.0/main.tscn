@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dclasu6g2as6g"]
+[gd_scene load_steps=12 format=3 uid="uid://dclasu6g2as6g"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_25upw"]
 [ext_resource type="PackedScene" uid="uid://cc6gry5jybsfx" path="res://fondo_a.tscn" id="2_iu6nv"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bacolqswd25dm" path="res://recursos/texts/text_paused.png" id="6_dg286"]
 [ext_resource type="AudioStream" uid="uid://5fgrgxopfgf" path="res://recursos/sound/pause_off.mp3" id="6_s4cll"]
 [ext_resource type="AudioStream" uid="uid://n3gko7u1by86" path="res://recursos/sound/pause_on.mp3" id="7_jgdbe"]
+[ext_resource type="FontFile" uid="uid://mjadfyp75mk6" path="res://recursos/tipografy/Lato-Regular.ttf" id="10_jc0kh"]
 
 [sub_resource type="SystemFont" id="SystemFont_6w5qh"]
 
@@ -18,26 +19,40 @@ script = ExtResource("1_25upw")
 [node name="fondo1" parent="." instance=ExtResource("2_iu6nv")]
 position = Vector2(-1, -4)
 
+[node name="label_stage" type="Label" parent="fondo1"]
+offset_left = 10.0
+offset_top = 12.0
+offset_right = 89.0
+offset_bottom = 64.0
+theme_override_fonts/font = ExtResource("5_ftmd2")
+text = "STAGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Control" parent="." instance=ExtResource("3_7dbc4")]
 
 [node name="musica_base" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_qsox0")
 volume_db = -13.811
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 3.0
+bus = &"Music"
 
 [node name="menu_text_stages" type="Popup" parent="."]
 transparent_bg = true
-size = Vector2i(746, 100)
+size = Vector2i(746, 109)
+visible = true
 transparent = true
 
 [node name="Label" type="Label" parent="menu_text_stages"]
-offset_left = 534.0
-offset_right = 746.0
-offset_bottom = 61.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -173.0
+offset_bottom = 109.0
+grow_horizontal = 0
+size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("5_ftmd2")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 90
+horizontal_alignment = 1
 
 [node name="menu_pause" type="Node" parent="."]
 process_mode = 3
@@ -45,9 +60,11 @@ script = ExtResource("5_somx4")
 
 [node name="sound_pause_off" type="AudioStreamPlayer2D" parent="menu_pause"]
 stream = ExtResource("6_s4cll")
+bus = &"SFX"
 
 [node name="sound_pause_on" type="AudioStreamPlayer2D" parent="menu_pause"]
 stream = ExtResource("7_jgdbe")
+bus = &"SFX"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="menu_pause"]
 visible = false
@@ -56,15 +73,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -55.0
-offset_top = -62.0
-offset_right = 55.0
-offset_bottom = 62.0
+offset_left = -91.0
+offset_top = -83.0
+offset_right = 91.0
+offset_bottom = 83.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="text_paused" type="Sprite2D" parent="menu_pause/VBoxContainer"]
-position = Vector2(55, -33)
+position = Vector2(88, -37)
 scale = Vector2(0.177609, 0.204762)
 texture = ExtResource("6_dg286")
 
@@ -74,6 +91,20 @@ size_flags_vertical = 8
 theme_override_fonts/font = SubResource("SystemFont_6w5qh")
 theme_override_font_sizes/font_size = 34
 text = "MENU"
+
+[node name="info_text2" type="Label" parent="menu_pause/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_jc0kh")
+text = "Esc key to return"
+horizontal_alignment = 1
+
+[node name="info_text" type="Label" parent="."]
+offset_left = 25.0
+offset_top = 674.0
+offset_right = 171.0
+offset_bottom = 697.0
+theme_override_fonts/font = ExtResource("10_jc0kh")
+text = "Esc key for pause"
 
 [connection signal="perdiste" from="." to="Control" method="_on_main_perdiste"]
 [connection signal="score_total" from="." to="Control" method="_on_main_score_total"]

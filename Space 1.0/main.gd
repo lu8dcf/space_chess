@@ -27,7 +27,7 @@ var vidas = 8   # cantidad de vidas
 # Player2
 var player2 = null
 var vidas2 = 8 # cantidad de vidas
-var multi_player = false
+var multi_player = GlobalSettings.game_multiplayer
 
 # Puntos del juego
 var score = 0 # Puntos de referencia 
@@ -37,18 +37,7 @@ signal stage # Indicador de Stage actual
 signal perdiste
 var stage_anterior = 0 #Inicio de la partida
 
-# varaibles de menu_text_stages
-var popup_panel
-var timer
-
-func _ready():
-	# Conectar la señal de multijugador
-	GlobalSettings.connect("game_multiplayer_main", Callable(self, "_on_check_multiplayer_toggled"))
-	
-	popup_panel = $menu_text_stages
-	timer = $Timer
-	# Conecta la señal timeout del Timer
-	timer.timeout.connect(_on_timer_timeout)
+func _ready():	
 		
 	inicia_planeta(planeta_x) # Instanciar planeta del fondo con movimiento
 		
@@ -66,21 +55,7 @@ func _ready():
 	
 	musica_juego()	
 
-	
 
-func visible_popup(text):
-	# Configurar texto
-	#popup_panel.get_node("Label").text = text
-	#Mostrar el popup
-	popup_panel.popup_centered()
-	# Iniciar timer
-	timer.start()
-	timer.wait_time=3
-	
-	
-func _on_timer_timeout():
-	popup_panel.hide()
-	
 # Función para el callback de multijugador
 func _on_check_multiplayer_toggled(toggle: bool):
 	print("¡Se ha activado la función de multijugador! main")
@@ -120,9 +95,10 @@ func _aparece_enemies():
 	#boss_activo =0 inicia el Boss
 	#boss_activo 1,2 o 3 , agrega diferentes enemigos con el boss
 	
+	# emite la señal cuando hubo un cambio de stage y lo envia a la pantalla
+	emit_signal("stage_actual",stage)  
 	# Nivel 1 - solo peones
 	if stage_actual == 1 or boss_activo == 1:
-		visible_popup("STAGE 1")
 		var enemy = preload("res://enemy.tscn").instantiate()
 		enemy.position = Vector2(posicion_x, 0) # Ubica al enemigo en la X random e Y en el inicio
 		add_child(enemy)  # Agrega como hijo del main al enemigo

@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cc6gry5jybsfx"]
+[gd_scene load_steps=10 format=3 uid="uid://cc6gry5jybsfx"]
 
 [ext_resource type="Script" path="res://fondo_a.gd" id="1_uicqx"]
 [ext_resource type="Script" path="res://estrellas.gd" id="3_6kuxv"]
 [ext_resource type="Texture2D" uid="uid://joq5yffsvfdn" path="res://recursos/fondo_movil/planeta2.png" id="3_iyypv"]
+[ext_resource type="Script" path="res://vibracion.gd" id="4_yv3l1"]
+[ext_resource type="AudioStream" uid="uid://bliopq8gfhu63" path="res://recursos/sound/subir_nivel.mp3" id="5_segd7"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_jgr0k"]
 a = Vector2(2, 37)
@@ -54,3 +56,12 @@ shape = SubResource("SegmentShape2D_8adum")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limite_abajo"]
 position = Vector2(1404, 41)
 shape = SubResource("SegmentShape2D_dmlur")
+
+[node name="vibracion" type="Camera2D" parent="."]
+position = Vector2(642, 371)
+ignore_rotation = false
+script = ExtResource("4_yv3l1")
+
+[node name="subir_nivel" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_segd7")
+volume_db = 10.0

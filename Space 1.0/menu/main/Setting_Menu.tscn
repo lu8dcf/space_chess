@@ -7,7 +7,7 @@
 base_font = ExtResource("2_cj0ok")
 
 [node name="SettingMenu" type="Popup"]
-position = Vector2i(750, 380)
+position = Vector2i(750, 228)
 size = Vector2i(500, 300)
 visible = true
 script = ExtResource("1_iqy3a")
@@ -26,9 +26,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 40.0
 offset_bottom = 40.0
-current_tab = 0
+current_tab = 2
 
 [node name="Video" type="TabBar" parent="settings_tabs"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -137,7 +138,6 @@ value = 50.0
 rounded = true
 
 [node name="Game Mode" type="TabBar" parent="settings_tabs"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -180,7 +180,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_fonts/font = SubResource("FontVariation_ckbuj")
 theme_override_font_sizes/font_size = 17
-text = ".1"
+text = ".1 "
 
 [node name="mouse_slider" type="HSlider" parent="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer3"]
 custom_minimum_size = Vector2(150, 0)
@@ -190,7 +190,10 @@ size_flags_vertical = 1
 min_value = 0.05
 max_value = 1.0
 step = 0.01
-value = 0.1
+value = 1.0
+exp_edit = true
+allow_greater = true
+allow_lesser = true
 
 [connection signal="item_selected" from="settings_tabs/Video/MarginContainer/video_settings/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="value_changed" from="settings_tabs/Audio/MarginContainer/audio_settings/HBoxContainer/master_slider" to="." method="_on_master_slider_value_changed"]

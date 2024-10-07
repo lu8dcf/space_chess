@@ -52,3 +52,4 @@ script = ExtResource("1_4xs12")
 
 [node name="sonido_explosion_player" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_opmsb")
+bus = &"SFX"

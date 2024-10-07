@@ -2,9 +2,17 @@ extends Area2D
 @onready var Fondo = $Fondo  # Es el nodo del fondo
 @onready var star = $star  # Es en nodo de las estrellas
 var nuevo_fondo = preload("res://recursos/fondo/Fondo0.png")  # fondo por defecto
+@onready var menu_text_stages = $"../menu_text_stages"
+@onready var label_text_stages = $label_stage
+
+
+
+@export var vibracion : Camera2D  # Nodo Camera2D para el temblor
 
 
 func _on_main_stage(stage_actual):
+	# se muestra en la label de la izq el texto del stage actual
+	label_text_stages.text = "STAGE " + str(stage_actual)
 	
 	match stage_actual:   # Cambio de fondo al cambiar de STAGE
 		1: 
@@ -20,10 +28,17 @@ func _on_main_stage(stage_actual):
 		4:
 			nuevo_fondo = preload("res://recursos/fondo/Fondo4.png")  # Carga la nueva imagen
 	
-	# Pausa		
-	get_tree().paused = true
-	await get_tree().create_timer(1).timeout  # Esperar el tiempo de cooldown
-	get_tree().paused = false	
+	# Pausa y vibración de la pantalla	
+	#menu_text_stages.popup() # Se muestra el texto de STAGE al jugador
+	#menu_text_stages.get_node("Label").text = "STAGE "+ str(stage_actual)
+	show_stage_popup(stage_actual)  # Muestra el popup con el texto del stage
+	#get_tree().paused = true
+	$vibracion.start_shake(10, 1) # vibracion d ela pantalla Intensidad 10, duración 1 segundos
+	$subir_nivel.play() # Sonido del nivel
+	await get_tree().create_timer(5.5).timeout  # Esperar el tiempo de cooldown
+	#menu_text_stages.hide() # el texto de STAGE desaparece
+	#get_tree().paused = false	
+	hide_stage_popup()  # Oculta el popup después del temblor
 	
 	# Asigna el nuevo fondo
 	Fondo.texture = nuevo_fondo  # Cambia la textura del sprite
@@ -35,17 +50,23 @@ func _on_main_stage(stage_actual):
 	star.linear_velocity = Vector2.ZERO  # Detiene el movimiento
 	#star.angular_velocity = 0  # Detiene la rotación
 	
-	# Cambia a estático para detener el cuerpo
-	#star.set_deferred("mode",RigidBody2D.STAT)
 	
-	#position = Vector2(0, 0)  # Restablece la posición
-	#linear_velocity = Vector2.ZERO  # Detiene el movimiento
-	#angular_velocity = 0  # Detiene la rotación
-
-	# Espera un momento y luego cambia a RIGID
-	#await get_tree().create_timer(0.1).timeout  # Esperar el tiempo de cooldown
+# Función para mostrar el popup con animación de agrandar la fuente
+func show_stage_popup(stage: int):
+	menu_text_stages.popup()  # Muestra el Popup
+	var label = menu_text_stages.get_node("Label")
+	label.text = "STAGE " + str(stage)  # Actualiza el texto con el número de etapa
 	
-	#set_deferred("mode", RigidBody2D.MODE_RIGID)  # Reactiva la física
+	# Crea el Tween para animar la escala y el tamaño de la fuente
+	var tween = get_tree().create_tween()  # Crea el tween para la animación
 	
+	# Se utiliza una animación Tween de Godot 4 para hacer crecer la escala y el tamaño de la fuente
 	
-	pass 
+	# Ajustamos las propiedades de transición y easing en líneas separadas
+	tween.tween_property(label, "rect_scale", Vector2(100, 100), 5.5)  # Animar la escala
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	
+# Función para ocultar el popup
+func hide_stage_popup():
+	menu_text_stages.hide()  # Oculta el Popup

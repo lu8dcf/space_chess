@@ -36,10 +36,10 @@ func move_down():
 	# ver la explosion del enemigo con particulas y el sonido
 @export var explosion: PackedScene  # Exporta la escena de explosión
 func _pego_el_laser():
-	#var explosion_instance = explosion.instantiate() # Instanciar la escena de explosión
-	#explosion_instance.position = position  # Colocar la explosión en la posición del enemigo
-	#get_parent().add_child(explosion_instance) # Agregar de hijo 
-	#explosion_instance.emitting = true  # Iniciar la emisión de partículas
+	var explosion_instance = explosion.instantiate() # Instanciar la escena de explosión
+	explosion_instance.position = position  # Colocar la explosión en la posición del enemigo
+	get_parent().add_child(explosion_instance) # Agregar de hijo 
+	explosion_instance.emitting = true  # Iniciar la emisión de partículas
 	pass
 	
 	# Destruir la roca y player cuando colisionan
