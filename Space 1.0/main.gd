@@ -23,6 +23,7 @@ var planeta_x = 0.3 * pantalla_ancho # ubicacion inicial del planeta en ele eje 
 # Player
 var player = null
 var vidas = 8   # cantidad de vidas
+signal live
 
 # Player2
 var player2 = null
@@ -30,11 +31,12 @@ var vidas2 = 8 # cantidad de vidas
 var multi_player = GlobalSettings.game_multiplayer
 
 # Puntos del juego
-var score = 0 # Puntos de referencia 
+var score = 0 # Puntos totales
+var score_stage = 0 # Puntos del stage
 var stage_actual = 1
 signal score_total
 signal stage # Indicador de Stage actual
-signal perdiste
+signal loss
 var stage_anterior = 0 #Inicio de la partida
 
 func _ready():	
@@ -78,6 +80,7 @@ func inicia_player():
 	player = preload("res://player.tscn").instantiate()
 	player.position = Vector2(pantalla_ancho/2,0.9*pantalla_alto)  # Colocar al jugador en la parte inferior al centro
 	add_child(player)  # Agrega el nodo hijo
+	emit_signal("live",vidas) # Muestra la cantidad de vidas
 	
 func inicia_player2():
 	player2 = preload("res://player2.tscn").instantiate()
@@ -109,14 +112,14 @@ func _aparece_enemies():
 	
 	# nivel 2 - solo torres
 	elif stage_actual == 2 or boss_activo == 2:
-		var enemy = preload("res://enemy2.tscn").instantiate()
+		var enemy = preload("res://enemy3.tscn").instantiate()
 		enemy.position = Vector2(posicion_x, 0) # Ubica al enemigo en la X random e Y en el inicio
 		add_child(enemy)  # Agrega como hijo del main al enemigo
 		enemies.append(enemy)
 		
 	# Nivel 3 - Solo Alfiles
 	elif stage_actual == 3 or boss_activo == 3:
-		var enemy = preload("res://enemy3.tscn").instantiate()
+		var enemy = preload("res://enemy2.tscn").instantiate()
 		enemy.position = Vector2(posicion_x, 0) # Ubica al enemigo en la X random e Y en el inicio
 		add_child(enemy)  # Agrega como hijo del main al enemigo
 		enemies.append(enemy)
@@ -169,51 +172,53 @@ func temporizador_mueve_enemigos(): #  temporizador para controlar el movimiento
 	
 func _move_enemies(): # Mueve todas las naves enemigas hacia abajo cada vez que se activa el temporizador
 	var enemigos_eliminados = 0    # Actualiza el valor de la pantalla anterior
-	for enemy in enemies:
+	for enemy in enemies:  # Repasa las instancias activas de los enemigos
 		if enemy != null: # Si existe el elemento
 		
-			enemy.move_down()
+			enemy.move_down()  # realiza el movimiento de la intancia segun su logica
 			# Verificar si la nave ha salido de la pantalla (por la parte inferior)
 			if enemy.position.y > 1.1*pantalla_alto: #110% 
-				# Eliminarla del árbol de nodos
-				enemy.queue_free()
-				# Eliminarla de la lista de enemigos
-				enemies.erase(enemy)
-		else:
-			enemigos_eliminados +=10  # suma 10 por cada enmigo eliminado
+				enemy.queue_free() # Eliminarla del árbol de nodos
+				enemies.erase(enemy)# Eliminarla de la lista de enemigos
+		else: # si fue eiminda por un laser del player
+			enemigos_eliminados +=10  # suma 10 por cada enemigo eliminado
+	enemigos_eliminados += score_stage
 			
 	if enemigos_eliminados != score:   # verifica el puntaje sea diferente al anterior
-		score = enemigos_eliminados	
-		
-		# emite la señal cuando hubo un cambio de score y lo envia a la pantalla
-		emit_signal("score_total",score)  
+		score = enemigos_eliminados	  # guarda el valor del score actual
+		emit_signal("score_total",score)  # emite la señal cuando hubo un cambio de score y lo envia a la pantalla
 				
 	# efecto de fondo, determinara el tiempo de la pantalla
-	planeta.move_down() # Mueve al planeta
+	planeta.move_down() # Mueve al planeta (solo es un efecto secundario)
 		
 	
 	# Niveles
 func _process(delta):
 	if multi_player:
-		if score == 200:
-			stage_actual=2   # Cambio al nvel 2
-		elif score == 400:
-			stage_actual=3   # Cambio al nivel 3
-		elif score == 600:
-			stage_actual=4   # Cambio al nivel 4		
-	else:
 		if score == 100:
 			stage_actual=2   # Cambio al nvel 2
+			score_stage=score
 		elif score == 200:
 			stage_actual=3   # Cambio al nivel 3
+			score_stage=score
 		elif score == 300:
 			stage_actual=4   # Cambio al nivel 4
-			
+			score_stage=score		
+	else:
+		if score == 10:
+			stage_actual=2   # Cambio al nvel 2
+			score_stage=score
+		elif score == 30:
+			stage_actual=3   # Cambio al nivel 3
+			score_stage=score
+		elif score == 50:
+			stage_actual=4   # Cambio al nivel 4
+			score_stage=score
 	# cambio de nivel
 	if stage_actual!=stage_anterior:
 		emit_signal("stage",stage_actual) # Señal que cambia el finde de la pantalla
 		
-		# al Cambiar de nivel elimina todas las instancias de enemigos
+		# al Cambiar de nivel elimina todas las instancias de enemigos para limpiar la pantalla
 		
 		for i in range(rocas.size() - 1, -1, -1):  # Iterar en orden inverso
 			var rocaD = rocas[i]
@@ -232,9 +237,10 @@ func _process(delta):
 	
 	if player == null and vidas>0: # Si existe el elemento
 		vidas -=1
+		emit_signal("live",vidas) # Muestra la cantidad de vidas
 		inicia_player()
 	elif player == null and vidas==0:
-		perdiste_juego()
+		loss_game()
 	else:
 		pass
 		
@@ -244,13 +250,13 @@ func _process(delta):
 			vidas2 -=1
 			inicia_player2()
 		elif player2 == null and vidas2==0 and vidas == 0:
-			perdiste_juego()
+			loss_game()
 		else:
 			pass
 			
 		
-func perdiste_juego():
-	emit_signal("perdiste")
+func loss_game():
+	emit_signal("loss")
 	pass
 			
 func musica_juego():
@@ -258,7 +264,7 @@ func musica_juego():
 
 
 
-##### REINICIO
+##### REINICIO del juego desde el menu principal
 	
 func reset_game():
 	get_tree().reload_current_scene() #resetea la escena principal y sus hijos

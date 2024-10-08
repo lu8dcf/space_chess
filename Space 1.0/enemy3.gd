@@ -20,7 +20,7 @@ func _ready():
 # Mueve al enemigo un paso hacia abajo (simulando una Torre)
 func move_down():
 	# cada 8 pasos cambia de direccion
-	if cantidad_pasos==8:
+	if cantidad_pasos==6:
 		var nueva_direccion_x = rand.randi_range(-1, 1)  # Genera un número entre -1  y 1 (inclusive)
 		
 		if nueva_direccion_x == 0: #invierte el trayecto

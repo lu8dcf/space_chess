@@ -125,7 +125,8 @@ offset_bottom = 697.0
 theme_override_fonts/font = ExtResource("10_jc0kh")
 text = "Esc key for pause"
 
-[connection signal="perdiste" from="." to="Control" method="_on_main_perdiste"]
+[connection signal="live" from="." to="Control" method="_on_main_live"]
+[connection signal="loss" from="." to="Control" method="_on_main_loss"]
 [connection signal="score_total" from="." to="Control" method="_on_main_score_total"]
 [connection signal="stage" from="." to="fondo1" method="_on_main_stage"]
 [connection signal="pressed" from="menu_pause/VBoxContainer/button_menu" to="menu_pause" method="_on_button_pressed"]
