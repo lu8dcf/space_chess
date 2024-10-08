@@ -35,7 +35,7 @@ func _on_main_stage(stage_actual):
 	$vibracion.start_shake(10, 1) # vibracion d ela pantalla Intensidad 10, duración 1 segundos
 	$subir_nivel.play() # Sonido del nivel
 	Fondo.texture = nuevo_fondo  # # Asigna el nuevo fondo
-	await get_tree().create_timer(5.5).timeout  # Esperar el tiempo de cooldown
+	await get_tree().create_timer(6.5).timeout  # Esperar el tiempo que se muestra el estado del stage
 	
 	hide_stage_popup()  # Oculta el popup después del temblor
 	
@@ -50,7 +50,11 @@ func _on_main_stage(stage_actual):
 func show_stage_popup(stage: int):
 	menu_text_stages.popup()  # Muestra el Popup
 	var label = menu_text_stages.get_node("Label")
-	label.text = "STAGE " + str(stage)  # Actualiza el texto con el número de etapa
+	var muestra = str(stage)
+	if stage==4:
+		muestra="FINAL"
+		
+	label.text = "STAGE " + muestra  # Actualiza el texto con el número de etapa
 	
 	# Crea el Tween para animar la escala y el tamaño de la fuente
 	var tween = get_tree().create_tween()  # Crea el tween para la animación

@@ -26,10 +26,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 40.0
 offset_bottom = 40.0
-current_tab = 2
+current_tab = 0
 
 [node name="Video" type="TabBar" parent="settings_tabs"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -138,6 +137,7 @@ value = 50.0
 rounded = true
 
 [node name="Game Mode" type="TabBar" parent="settings_tabs"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 

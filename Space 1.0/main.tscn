@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://main.gd" id="1_25upw"]
 [ext_resource type="PackedScene" uid="uid://cc6gry5jybsfx" path="res://fondo_a.tscn" id="2_iu6nv"]
 [ext_resource type="PackedScene" uid="uid://8v8r8xh5kwx0" path="res://titulo.tscn" id="3_7dbc4"]
-[ext_resource type="AudioStream" uid="uid://gp7h2010agyt" path="res://recursos/sound/Star_Wars_Main_Theme.mp3" id="4_qsox0"]
 [ext_resource type="FontFile" uid="uid://d2lrxcq32ew71" path="res://recursos/tipografy/FontsFree-Net-BroadwayD-1.ttf" id="5_ftmd2"]
+[ext_resource type="AudioStream" uid="uid://bnu2pnsky81wg" path="res://recursos/sound/game_music.mp3" id="5_nluri"]
 [ext_resource type="Script" path="res://menu/pause/pause.gd" id="5_somx4"]
 [ext_resource type="Texture2D" uid="uid://bacolqswd25dm" path="res://recursos/texts/text_paused.png" id="6_dg286"]
 [ext_resource type="AudioStream" uid="uid://5fgrgxopfgf" path="res://recursos/sound/pause_off.mp3" id="6_s4cll"]
@@ -33,7 +33,7 @@ vertical_alignment = 1
 [node name="Control" parent="." instance=ExtResource("3_7dbc4")]
 
 [node name="musica_base" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_qsox0")
+stream = ExtResource("5_nluri")
 volume_db = -13.811
 bus = &"Music"
 

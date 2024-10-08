@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvricas5e7cbo"]
+[gd_scene load_steps=18 format=3 uid="uid://dvricas5e7cbo"]
 
 [ext_resource type="Script" path="res://menu/main/scripts/menu_main.gd" id="1_qewvt"]
 [ext_resource type="AudioStream" uid="uid://cd2vey0n7883" path="res://recursos/sound/intro.mp3" id="2_kqo7t"]
@@ -14,6 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://c2qx1o1fru5t2" path="res://menu/button/options_hover.png" id="10_t20ad"]
 [ext_resource type="Texture2D" uid="uid://ba3bvgc8c1b4m" path="res://menu/button/quit_hover.png" id="12_utdsh"]
 [ext_resource type="PackedScene" uid="uid://bkipu72p7cbq6" path="res://menu/main/Setting_Menu.tscn" id="14_v6ndh"]
+[ext_resource type="Texture2D" uid="uid://pjmjgbdf5ipx" path="res://menu/button/credits.png" id="15_4kt2s"]
+[ext_resource type="Texture2D" uid="uid://bvfuwexn8wf3j" path="res://menu/button/credits_press.png" id="16_61whh"]
+[ext_resource type="Texture2D" uid="uid://cp3b47ikckmef" path="res://menu/button/credits_hover.png" id="17_pbksc"]
 
 [node name="Menu Main" type="Control"]
 layout_mode = 3
@@ -76,6 +79,18 @@ texture_hover = ExtResource("12_utdsh")
 [node name="SettingMenu" parent="." instance=ExtResource("14_v6ndh")]
 visible = false
 
+[node name="credits" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 608.0
+offset_right = 651.0
+offset_bottom = 1001.0
+scale = Vector2(0.29439, 0.272923)
+texture_normal = ExtResource("15_4kt2s")
+texture_pressed = ExtResource("16_61whh")
+texture_hover = ExtResource("17_pbksc")
+
 [connection signal="pressed" from="VBoxContainer/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="VBoxContainer/options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="VBoxContainer/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="credits" to="." method="_on_credits_pressed"]

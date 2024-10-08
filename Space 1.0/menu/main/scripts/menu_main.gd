@@ -21,3 +21,7 @@ func _on_quit_pressed() -> void: # al hacer click en el boton de SALIR se cerrar
 func _on_options_pressed() -> void:  # al hacer click en el boton de OPCIONES se reedirige al menu de opciones
 	$VBoxContainer/buttons.play()
 	$SettingMenu.popup()
+
+
+func _on_credits_pressed() -> void:
+	get_tree().change_scene_to_file("res://menu/main/credits.tscn")

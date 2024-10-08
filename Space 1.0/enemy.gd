@@ -10,7 +10,7 @@ func _ready():
 	add_to_group("enemy") # Agrega al grupo enemigo para poder ser destruido por el laser player
 	
 	cambio_velocidad() # Selector de velocidades de las distintas instancias por random
-	
+			
 	
 	# Cada instancia tendra una velocidad diferente aleatoria
 func cambio_velocidad():
@@ -23,7 +23,7 @@ func cambio_velocidad():
 # Mueve al enemigo un paso hacia abajo (simulando un peón)
 func move_down():
 	position += move_direction * pasos
-
+	#set_vector(get_node("../Mara").global_position - global_position)
 # cuando el laser del player impacta en el enemigo y lo destruye, sonido y animaciom
 
 func _pego_el_laser():

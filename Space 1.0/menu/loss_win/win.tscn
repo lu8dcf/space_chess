@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce4b88f3ge3ig"]
+
+[ext_resource type="Script" path="res://menu/loss_win/scripts/win.gd" id="1_1uaeu"]
+[ext_resource type="Texture2D" uid="uid://b272obi35m46q" path="res://recursos/fondo/ganaste.png" id="1_4ut81"]
+[ext_resource type="AudioStream" uid="uid://bor8nyjm32k2a" path="res://recursos/sound/button.mp3" id="2_0yg75"]
+
+[sub_resource type="SystemFont" id="SystemFont_uiom3"]
+
+[node name="Win" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1uaeu")
+
+[node name="bacground_win" type="Sprite2D" parent="."]
+position = Vector2(640.875, 370.625)
+scale = Vector2(0.664773, 0.698843)
+texture = ExtResource("1_4ut81")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 395.0
+offset_top = 166.0
+offset_right = 670.0
+offset_bottom = 426.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="buttons" type="AudioStreamPlayer2D" parent="VBoxContainer2"]
+stream = ExtResource("2_0yg75")
+bus = &"SFX"
+
+[node name="button_menu" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_fonts/font = SubResource("SystemFont_uiom3")
+theme_override_font_sizes/font_size = 34
+text = "MENU"
+
+[node name="button_restart" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_fonts/font = SubResource("SystemFont_uiom3")
+theme_override_font_sizes/font_size = 34
+text = "RESTART"
+
+[node name="button_exit" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_fonts/font = SubResource("SystemFont_uiom3")
+theme_override_font_sizes/font_size = 34
+text = "EXIT"
+
+[connection signal="pressed" from="VBoxContainer2/button_menu" to="." method="_on_button_menu_pressed"]
+[connection signal="pressed" from="VBoxContainer2/button_restart" to="." method="_on_button_restart_pressed"]
+[connection signal="pressed" from="VBoxContainer2/button_exit" to="." method="_on_button_exit_pressed"]

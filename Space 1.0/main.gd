@@ -20,6 +20,10 @@ var planetas = [] # planetas del fondo
 var planeta = null
 var planeta_x = 0.3 * pantalla_ancho # ubicacion inicial del planeta en ele eje x
 
+# Fondo perder y ganar
+@onready var back_loss = $Node/bacground_win
+@onready var back_win = $Node/background_loss
+
 # Player
 var player = null
 var vidas = 8   # cantidad de vidas
@@ -205,13 +209,13 @@ func _process(delta):
 			stage_actual=4   # Cambio al nivel 4
 			score_stage=score		
 	else:
-		if score == 10:
+		if score == 100:
 			stage_actual=2   # Cambio al nvel 2
 			score_stage=score
-		elif score == 30:
+		elif score == 200:
 			stage_actual=3   # Cambio al nivel 3
 			score_stage=score
-		elif score == 50:
+		elif score == 300:
 			stage_actual=4   # Cambio al nivel 4
 			score_stage=score
 	# cambio de nivel
@@ -255,7 +259,14 @@ func _process(delta):
 			pass
 			
 		
+		
+func win_game():
+	get_tree().change_scene_to_file("res://menu/loss_win/win.tscn")
+	emit_signal("win")
+	pass
+	
 func loss_game():
+	get_tree().change_scene_to_file("res://menu/loss_win/loss.tscn")
 	emit_signal("loss")
 	pass
 			

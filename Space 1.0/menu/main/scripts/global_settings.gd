@@ -14,6 +14,10 @@ var player1_switch_keyboard_mouse = true# si es true es mouse, si es false son t
 var player1_arrows_or_awsd =  true #si es true, juega con flechas, si es false, juega con AWSD
 var player2_switch_keyboard_mouse = false # si es true es mouse, si es false son teclas
 var player2_arrows_or_awsd =  false #si es true, juega con flechas, si es false, juega con AWSD
+
+# creditos
+
+
 # funciones de video
 
 func change_display_mode(toggle: bool):
