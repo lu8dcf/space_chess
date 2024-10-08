@@ -37,9 +37,6 @@ func _on_music_slider_value_changed(value: float) -> void:
 func _on_sfx_slider_value_changed(value: float) -> void:
 	GlobalSettings.update_master_vol(2,value)
 
-#func _on_check_multiplayer_pressed(button_pressed: bool) -> void:
-	#GlobalSettings.game_mode_multiplayer(button_pressed)
-
 func _on_check_multiplayer_toggled(toggled_on: bool) -> void:
 	GlobalSettings.game_mode_multiplayer(toggled_on)
 	print(toggled_on)
@@ -47,3 +44,11 @@ func _on_check_multiplayer_toggled(toggled_on: bool) -> void:
 func _on_mouse_slider_value_changed(value: float) -> void:
 	GlobalSettings.update_mouse_sens(value)
 	mouse_sens_amount.text = str(value)
+
+
+func _on_option_button_player_1_item_selected(index: int) -> void:
+	GlobalSettings.move_player1(index)
+
+
+func _on_option_button_player_2_item_selected(index: int) -> void:
+	GlobalSettings.move_player2(index)

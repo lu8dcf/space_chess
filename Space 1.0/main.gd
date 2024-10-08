@@ -38,7 +38,8 @@ signal perdiste
 var stage_anterior = 0 #Inicio de la partida
 
 func _ready():	
-		
+	
+
 	inicia_planeta(planeta_x) # Instanciar planeta del fondo con movimiento
 		
 	inicia_player() # # Instanciar y añadir la nave del jugador en el punto central abajo
@@ -54,7 +55,9 @@ func _ready():
 	temporizador_mueve_enemigos() # Timer para controlar el movimiento de las naves enemigas
 	
 	musica_juego()	
-
+	
+	
+	
 
 # Función para el callback de multijugador
 func _on_check_multiplayer_toggled(toggle: bool):
@@ -252,3 +255,16 @@ func perdiste_juego():
 			
 func musica_juego():
 	$musica_base.play()
+
+
+
+##### REINICIO
+	
+func reset_game():
+	get_tree().reload_current_scene() #resetea la escena principal y sus hijos
+	pass
+
+# se toca el boton restart
+func _on_button_restart_pressed() -> void:
+	get_tree().paused = false
+	reset_game()

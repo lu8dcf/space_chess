@@ -28,23 +28,18 @@ func _on_main_stage(stage_actual):
 		4:
 			nuevo_fondo = preload("res://recursos/fondo/Fondo4.png")  # Carga la nueva imagen
 	
-	# Pausa y vibración de la pantalla	
-	#menu_text_stages.popup() # Se muestra el texto de STAGE al jugador
-	#menu_text_stages.get_node("Label").text = "STAGE "+ str(stage_actual)
+	#  vibración de la pantalla	 y mensaje de Stage
+	
 	show_stage_popup(stage_actual)  # Muestra el popup con el texto del stage
-	#get_tree().paused = true
+	
 	$vibracion.start_shake(10, 1) # vibracion d ela pantalla Intensidad 10, duración 1 segundos
 	$subir_nivel.play() # Sonido del nivel
+	Fondo.texture = nuevo_fondo  # # Asigna el nuevo fondo
 	await get_tree().create_timer(5.5).timeout  # Esperar el tiempo de cooldown
-	#menu_text_stages.hide() # el texto de STAGE desaparece
-	#get_tree().paused = false	
+	
 	hide_stage_popup()  # Oculta el popup después del temblor
 	
-	# Asigna el nuevo fondo
-	Fondo.texture = nuevo_fondo  # Cambia la textura del sprite
-	
 	# reinicia las estrellas
-	
 	star.position = Vector2(0, 0)  # Restablece la posición a (0, 0)
 	
 	star.linear_velocity = Vector2.ZERO  # Detiene el movimiento

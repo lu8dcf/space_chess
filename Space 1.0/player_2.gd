@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 # Propiedades de la Nave
-var speed = 500.0 # velocidad de movimiento de la nave
-var speed2 = 10
+var speed = 500 # velocidad de movimiento de la nave
 var direction = Vector2.ZERO
+var deadzone_radius : float = 20  # Zona muerta para cuando el mouse se alinea con la nave
+
+var mouse_sensitivy = GlobalSettings.mouse_sens # se utiliza la variable global que se modifica en el menu de opciones
 
 # Propiedades del Disparo laser
 var laser_scene = preload("res://laser.tscn")  # Cargar la escena del láser
@@ -14,64 +16,104 @@ var shoot_cooldown = 0.5  # Tiempo entre disparos
 var can_shoot = true
 
 # Propiedades de la Pantalla y dispositivos
-var pantalla_alto = 650
-var pantalla_ancho = 1200
+var pantalla_alto = 720
+var pantalla_ancho = 1280
+var switch_keyboard_mouse = GlobalSettings.player2_switch_keyboard_mouse # si es true es mouse, si es false son teclas
+var arrows_or_awsd = GlobalSettings.player2_arrows_or_awsd
+
 
 
 
 func _physics_process(delta):
-	Move_with_keyboard()
+	move_with_key()
 	shoot_with_key()
 	
 	pass
 
 
-func Move_with_keyboard():
-	Move_up()
-	Move_down()
-	Move_right()
-	Move_left()
-	Stop()
-	#if direction != Vector2.ZERO:
-		#direction = direction.normalized()
-		#direction = direction*speed
-	move_and_collide(direction)
-	pass
-	
-func Move_up():
+# MOVIMIENTO Y DISPARO DE LA NAVE
+func move_with_keyboards():
+	var multip = $"/root/GlobalSettings".game_multiplayer
+	if arrows_or_awsd or multip:
+		move_with_arrows();
+	else:
+		move_with_key();
+
+# movimiento con teclado
+# 
+func move_with_key(): # SE MUEVE USANDO A, W, S, D
+	var move_vector = Vector2.ZERO
 	if Input.is_action_pressed("ui_w") and position.y > 10:
-		direction.y = -speed2
-	pass
-
-func Move_down():
-	if Input.is_action_pressed("ui_s") and position.y < pantalla_alto -20:
-		direction.y = speed2
-	pass
-
-func Move_right():
-	if Input.is_action_pressed("ui_d"):
-		direction.x = speed2
-	pass
-
-func Move_left():
+		move_vector.y -= 1
+	if Input.is_action_pressed("ui_s") and position.y < pantalla_alto -10:
+		move_vector.y += 1
 	if Input.is_action_pressed("ui_a"):
-		direction.x = -speed2
+		move_vector.x -= 1
+	if Input.is_action_pressed("ui_d"):
+		move_vector.x += 1
+		
+		#normaliza el movimiento
+	if move_vector.length() > 0:
+		move_vector = move_vector.normalized() * speed * mouse_sensitivy # el mouse sensitivity para que tenga la misma sensibilidad que elmouse
+	velocity = move_vector
+	move_and_slide()
 	pass
-
-func Stop():
-	if (Input.is_action_just_released("ui_d") or
-			Input.is_action_just_released("ui_a") or
-			Input.is_action_just_released("ui_s") or
-			Input.is_action_just_released("ui_w")):
-		direction.x = 0
-		direction.y = 0
-	pass
-
-func shoot_with_key():
+func shoot_with_key(): # DISPARA CON LA "R"
 	if Input.is_action_just_pressed("ui_r") and can_shoot:  # disparo cuando se presiona la tecla "R"
 		_fire_laser()	 # Disparo del laser
-		_fire_laser()
 	pass	
+
+
+func move_with_arrows(): # se mueve usando las flechas
+	var move_vector = Vector2.ZERO
+	
+	if Input.is_action_pressed("ui_up") and position.y > 10:
+		move_vector.y -= 1
+	if Input.is_action_pressed("ui_down") and position.y < pantalla_alto -20:
+		move_vector.y += 1
+	if Input.is_action_pressed("ui_left"):
+		move_vector.x -= 1
+	if Input.is_action_pressed("ui_right"):
+		move_vector.x += 1
+		
+		#normaliza el movimiento
+	if move_vector.length() > 0:
+		move_vector = move_vector.normalized() * speed * mouse_sensitivy # el mouse sensitivity para que tenga la misma sensibilidad que elmouse
+	velocity = move_vector
+	move_and_slide()
+	pass
+func shoot_with_ctrl(): #DISPARA CON "CONTROL"
+	if Input.is_action_just_pressed("ui_ctrl") and can_shoot:  # disparo cuando se presiona la tecla "R"
+		_fire_laser()	 # Disparo del laser
+	pass		
+
+#Movimiento y disparo con mouse
+func move_with_mouse():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN) # oculta el mouse y evita que salga de la pantalla del videojuego
+	var move_vector = Vector2.ZERO
+	var mouse_position = get_viewport().get_mouse_position() #posicion del mouse
+	var direction_to_mouse = (mouse_position - global_position) #la distancia entre el mouse y la nave
+	#position.x = clamp (position.x,20, pantalla_ancho* .98) # Limite de movimientos en ancho de pantalla
+	#position.y = clamp (position.y,10, pantalla_alto*0.95) # Limite de movimientos en altoo de pantalla
+	if direction_to_mouse.length() > deadzone_radius:
+		direction_to_mouse = direction_to_mouse.normalized() * speed * mouse_sensitivy #si no está dentro de la zona muerta, se mueve
+	else:
+		direction_to_mouse = Vector2.ZERO  # Si está en la zona muerta, no se mueve
+	move_vector += direction_to_mouse
+	velocity = move_vector
+	move_and_slide()
+	pass
+
+func shoot_with_click():
+	if Input.is_action_just_pressed("ui_click_izq") and can_shoot:  # disparo con el mouse 
+		_fire_laser()	 # Disparo del laser
+	pass
+
+
+
+
+
+
 
 # La explosion de la nave
 @export var explosion: PackedScene  # Exporta la escena de explosión
