@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://8v8r8xh5kwx0"]
+
+[ext_resource type="Script" path="res://background/titulo.gd" id="1_17ow2"]
+[ext_resource type="Texture2D" uid="uid://ci6qjl4a0akbw" path="res://recursos/enemy/nave_icono.png" id="2_j5iil"]
+
+[node name="Panel" type="Panel"]
+offset_left = 14.0
+offset_top = 64.0
+offset_right = 117.0
+offset_bottom = 128.0
+script = ExtResource("1_17ow2")
+
+[node name="score" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 61.0
+offset_top = 1.0
+offset_right = 112.0
+offset_bottom = 24.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="live" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 39.0
+offset_top = 35.0
+offset_right = 90.0
+offset_bottom = 58.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="texto_score" type="Label" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 1.0
+offset_right = 59.0
+offset_bottom = 24.0
+text = "SCORE"
+
+[node name="perdiste" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 369.0
+offset_top = 95.0
+offset_right = 448.0
+offset_bottom = 118.0
+text = "PERDISTE"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 34.0
+offset_right = 42.0
+offset_bottom = 57.0
+texture = ExtResource("2_j5iil")
+expand_mode = 1
+stretch_mode = 1

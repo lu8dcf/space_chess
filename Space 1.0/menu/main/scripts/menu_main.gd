@@ -10,7 +10,7 @@ func _ready() -> void:
 
 func _on_play_pressed() -> void: # al hacer click en el boton de JUGAR empieza el juego en el nivel 1
 	$VBoxContainer/buttons.play()
-	get_tree().change_scene_to_file("res://main.tscn")
+	get_tree().change_scene_to_file("res://game/main.tscn")
 
 
 func _on_quit_pressed() -> void: # al hacer click en el boton de SALIR se cerrará el programa 

@@ -14,7 +14,7 @@ config/name="spaceships_ enemigos"
 run/main_scene="res://menu/main/index.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/image="res://recursos/fondo/splash_screen.png"
-config/icon="res://icon.svg"
+config/icon="res://recursos/icon.svg"
 
 [autoload]
 

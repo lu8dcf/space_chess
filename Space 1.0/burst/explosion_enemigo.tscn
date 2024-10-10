@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://53bou81b5eal"]
+[gd_scene load_steps=6 format=3 uid="uid://bq4e0eqxpb0ke"]
 
-[ext_resource type="Script" path="res://explosion.gd" id="1_qfofq"]
-[ext_resource type="AudioStream" uid="uid://c2ga1475rnhn5" path="res://recursos/sound/explosion_enemigo.mp3" id="2_jkrvl"]
+[ext_resource type="AudioStream" uid="uid://c2ga1475rnhn5" path="res://recursos/sound/explosion_enemigo.mp3" id="1_3su4s"]
+[ext_resource type="Script" path="res://burst/explosion_enemigo.gd" id="1_on87a"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jmkqp"]
 
@@ -38,7 +38,8 @@ scale_amount_max = 6.0
 color = Color(0.396078, 0.635294, 0.431373, 1)
 color_ramp = SubResource("Gradient_daqru")
 anim_speed_max = 18.0
-script = ExtResource("1_qfofq")
+script = ExtResource("1_on87a")
 
 [node name="sonido_explosion_enemigo" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_jkrvl")
+stream = ExtResource("1_3su4s")
+bus = &"SFX"

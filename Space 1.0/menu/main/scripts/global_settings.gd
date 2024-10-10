@@ -15,6 +15,10 @@ var player1_arrows_or_awsd =  true #si es true, juega con flechas, si es false, 
 var player2_switch_keyboard_mouse = false # si es true es mouse, si es false son teclas
 var player2_arrows_or_awsd =  false #si es true, juega con flechas, si es false, juega con AWSD
 
+# pantalla
+var pantalla_ancho = 1200
+var pantalla_alto = 720
+
 # creditos
 
 

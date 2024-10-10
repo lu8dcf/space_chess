@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://rmb76ykmq8e8"]
+
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_y5lai"]
+[ext_resource type="PackedScene" uid="uid://bq4e0eqxpb0ke" path="res://burst/explosion_enemigo.tscn" id="2_cdgch"]
+[ext_resource type="Texture2D" uid="uid://bmbxpr5xuudc8" path="res://recursos/enemy/enemy1.png" id="3_i7vj3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hsxkc"]
+radius = 21.0
+height = 42.0
+
+[node name="Enemigos" type="CharacterBody2D" groups=["enemy"]]
+position = Vector2(-35, -42)
+script = ExtResource("1_y5lai")
+explosion = ExtResource("2_cdgch")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]
+position = Vector2(-1, -8)
+shape = SubResource("CapsuleShape2D_hsxkc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4.99999, -4.76837e-07)
+scale = Vector2(0.19206, 0.194251)
+texture = ExtResource("3_i7vj3")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" groups=["enemy"]]
+position = Vector2(-3, -6)
+shape = SubResource("CapsuleShape2D_hsxkc")
+metadata/_edit_group_ = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

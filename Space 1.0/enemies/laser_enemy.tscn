@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://jnsrxka2uckb"]
+
+[ext_resource type="Script" path="res://enemies/laser_enemy.gd" id="1_3ftqh"]
+[ext_resource type="Texture2D" uid="uid://btoxgooyb3nxl" path="res://recursos/laser/tiros.png" id="2_glye7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_62mw6"]
+radius = 3.0
+
+[node name="laser_enemy" type="Area2D"]
+position = Vector2(498, 312)
+script = ExtResource("1_3ftqh")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 3.14159
+scale = Vector2(0.16293, 0.16899)
+texture = ExtResource("2_glye7")
+hframes = 3
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 0)
+shape = SubResource("CapsuleShape2D_62mw6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

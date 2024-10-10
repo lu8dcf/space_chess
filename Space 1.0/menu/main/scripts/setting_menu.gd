@@ -20,10 +20,6 @@ func _ready() -> void:
 	pass
 	
 	
-
-
-
-
 func _on_option_button_item_selected(index: int) -> void:
 	GlobalSettings.change_display_mode(index) # se envia un 0 = windowed o un 1 = fullscreen, para que la funcion se encargue de cambiar el tamañao de la pantalla
 
