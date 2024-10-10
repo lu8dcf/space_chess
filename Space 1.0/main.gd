@@ -7,6 +7,7 @@ var rand = RandomNumberGenerator.new() # semilla de random segun el tiempo
 
 # Enemigos
 var enemies = []  # Almacenará las instancias de enemigos
+var enemies_boss = [] # Almacenara las instancias de los enemigos Boss
 var movimiento_enemigo = 0.05  # Intervalo de tiempo para el movimiento enemigo
 var timer_aparece_enemigo = .5 # 1seg Intervalo que aparecen los enemigos
 var boss_activo=0 # Bandera para Agregar secuaces al BOSS
@@ -19,10 +20,12 @@ var timer_aparece_rocas = .5 # 1 seg Intervalo que aparecen los enemigos
 var planetas = [] # planetas del fondo
 var planeta = null
 var planeta_x = 0.3 * pantalla_ancho # ubicacion inicial del planeta en ele eje x
-
+@onready var musica_base = $musica_base  # musica base, para aumentar la emosion se cambia su velocidad
+@onready var loss_ = $loss_  # Sonido de haber perdido
 # Fondo perder y ganar
 @onready var back_loss = $Node/bacground_win
 @onready var back_win = $Node/background_loss
+
 
 # Player
 var player = null
@@ -43,17 +46,18 @@ signal stage # Indicador de Stage actual
 signal loss
 var stage_anterior = 0 #Inicio de la partida
 
+# Premios
+var rocas_container=5 # Cantidad de rocas eliminadas necesarias para obtener un container con una vida
+
 func _ready():	
 	
 
 	inicia_planeta(planeta_x) # Instanciar planeta del fondo con movimiento
 		
-	inicia_player() # # Instanciar y añadir la nave del jugador en el punto central abajo
-	
-	if multi_player: # si multi_player es true, se instancia la nave 2
-		inicia_player2()
-		pass
-	
+	inicia_player() # Instanciar y añadir la nave del jugador en el punto central abajo
+		
+	inicia_player2() # Instancia la nave 2
+		
 	temporizador_agrega_enemigos() # Timer que marca los tiempos que se instancian los enemigos
 		
 	temporizador_agrega_rocas() #Timer que marca los tiempos que se intancian las rocas
@@ -62,8 +66,7 @@ func _ready():
 	
 	musica_juego()	
 	
-	
-	
+		
 
 # Función para el callback de multijugador
 func _on_check_multiplayer_toggled(toggle: bool):
@@ -87,9 +90,10 @@ func inicia_player():
 	emit_signal("live",vidas) # Muestra la cantidad de vidas
 	
 func inicia_player2():
-	player2 = preload("res://player2.tscn").instantiate()
-	player.position = Vector2(pantalla_ancho/2,0.3*pantalla_alto)  # Colocar al jugador2 en la parte //falta ajustar bien la posicion
-	add_child(player2)  # Agrega el nodo hijo
+	if multi_player: # si multi_player es true, se instancia la nave 2
+		player2 = preload("res://player2.tscn").instantiate()
+		player.position = Vector2(pantalla_ancho/2,0.3*pantalla_alto)  # Colocar al jugador2 en la parte //falta ajustar bien la posicion
+		add_child(player2)  # Agrega el nodo hijo
 	
 func temporizador_agrega_enemigos():
 	var enemy_aparece_timer = Timer.new()
@@ -130,10 +134,10 @@ func _aparece_enemies():
 		
 	# Nivel 4 - instancia al boos
 	elif stage_actual == 4 and boss_activo == 0:  # solo una instancia sera posible, para que solo halla un BOSS
-		var enemy = preload("res://enemy4.tscn").instantiate()
-		enemy.position = Vector2(posicion_x, 80) # Ubica al enemigo en la X random e Y en el inicio
-		add_child(enemy)  # Agrega como hijo del main al enemigo
-		enemies.append(enemy)
+		var enemy_boss = preload("res://enemy4.tscn").instantiate()
+		enemy_boss.position = Vector2(posicion_x, 80) # Ubica al enemigo en la X random e Y en el inicio
+		add_child(enemy_boss)  # Agrega como hijo del main al enemigo
+		enemies_boss.append(enemy_boss)
 		boss_activo = 1  # Activa la aparicion del BOSS para que se generen aletorios los acompañantes
 	
 	# genera la opcion de enemigo que acompaña al boss  
@@ -175,27 +179,56 @@ func temporizador_mueve_enemigos(): #  temporizador para controlar el movimiento
 	enemy_timer.timeout.connect(_move_enemies)
 	
 func _move_enemies(): # Mueve todas las naves enemigas hacia abajo cada vez que se activa el temporizador
+		
+	calculo_score() # Calcula la cant enemigos eliminados por el player para obtener el Score
+	
+	calculo_rocas() # Calcula la cant  rocas eliminada para proveer un container premio
+	
+	planeta.move_down() # Mueve al planeta (solo es un efecto secundario efecto de fondo)
+
+func calculo_score():
+	
 	var enemigos_eliminados = 0    # Actualiza el valor de la pantalla anterior
+	# SCORE - Se basa en la cantidad de enemigos eliminados 10 puntos por cada uno
 	for enemy in enemies:  # Repasa las instancias activas de los enemigos
 		if enemy != null: # Si existe el elemento
-		
-			enemy.move_down()  # realiza el movimiento de la intancia segun su logica
+			enemy.move_down()  # realiza el movimiento de la intancia segun su logica propia
 			# Verificar si la nave ha salido de la pantalla (por la parte inferior)
 			if enemy.position.y > 1.1*pantalla_alto: #110% 
 				enemy.queue_free() # Eliminarla del árbol de nodos
 				enemies.erase(enemy)# Eliminarla de la lista de enemigos
-		else: # si fue eiminda por un laser del player
+		else: # si fue eliminda por un laser del player
 			enemigos_eliminados +=10  # suma 10 por cada enemigo eliminado
 	enemigos_eliminados += score_stage
+	
+	for enemy_boss in enemies_boss:  # Repasa las instancias activas de los enemigos
+		if enemy_boss != null: # Si existe el elemento
+			enemy_boss.move_down()  # realiza el movimiento de la intancia segun su logica propia
+			# Verificar si la nave ha salido de la pantalla (por la parte inferior)
+			
+		else: # si fue eliminda por un laser del player
+			enemigos_eliminados += 200
+			win_game(enemigos_eliminados)  # muere el boss se gana la partida
+	
+	
 			
 	if enemigos_eliminados != score:   # verifica el puntaje sea diferente al anterior
 		score = enemigos_eliminados	  # guarda el valor del score actual
 		emit_signal("score_total",score)  # emite la señal cuando hubo un cambio de score y lo envia a la pantalla
-				
-	# efecto de fondo, determinara el tiempo de la pantalla
-	planeta.move_down() # Mueve al planeta (solo es un efecto secundario)
-		
-	
+						
+func calculo_rocas():
+	var rocas_eliminadas = 0    # Actualiza el valor de la pantalla anterior
+	# SCORE - Se basa en la cantidad de enemigos eliminados 10 puntos por cada uno
+	for rocasD in rocas:  # Repasa las instancias activas de los enemigos
+		if rocasD == null: # Si existe el elemento
+			rocas_eliminadas +=1
+			pass
+					
+	if rocas_eliminadas == rocas_container:   # verifica el puntaje sea diferente al anterior
+		print ("container")
+		rocas_container += rocas_container
+		#emit_signal("score_total",score)  # emite la señal cuando hubo un cambio de score y lo envia a la pantalla
+	pass
 	# Niveles
 func _process(delta):
 	if multi_player:
@@ -221,6 +254,7 @@ func _process(delta):
 	# cambio de nivel
 	if stage_actual!=stage_anterior:
 		emit_signal("stage",stage_actual) # Señal que cambia el finde de la pantalla
+		musica_base.pitch_scale += 0.1   # aumenta la velocidad de la musica base de la partida
 		
 		# al Cambiar de nivel elimina todas las instancias de enemigos para limpiar la pantalla
 		
@@ -260,14 +294,16 @@ func _process(delta):
 			
 		
 		
-func win_game():
+func win_game(enemigos_eliminados):
 	get_tree().change_scene_to_file("res://menu/loss_win/win.tscn")
 	emit_signal("win")
 	pass
 	
-func loss_game():
+func loss_game(): # al hacer click en el boton de JUGAR empieza el juego en el nivel 1
 	get_tree().change_scene_to_file("res://menu/loss_win/loss.tscn")
 	emit_signal("loss")
+	
+	
 	pass
 			
 func musica_juego():
@@ -279,6 +315,8 @@ func musica_juego():
 	
 func reset_game():
 	get_tree().reload_current_scene() #resetea la escena principal y sus hijos
+	
+	
 	pass
 
 # se toca el boton restart

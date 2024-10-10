@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcwajyknwnnlm"]
+[gd_scene load_steps=7 format=3 uid="uid://dcwajyknwnnlm"]
 
 [ext_resource type="Script" path="res://enemy4.gd" id="1_7a73b"]
+[ext_resource type="PackedScene" uid="uid://ccrm6ghx73wep" path="res://explosion_boss.tscn" id="2_dc8fn"]
 [ext_resource type="PackedScene" uid="uid://r1ffid4t73c8" path="res://explosion.tscn" id="2_r0e3n"]
 [ext_resource type="Texture2D" uid="uid://bkfahg5rpf0r4" path="res://recursos/enemy/enemyBoss.png" id="3_tea31"]
 
@@ -14,6 +15,7 @@ size = Vector2(189, 112)
 [node name="Enemigos4" type="CharacterBody2D" groups=["boss"]]
 position = Vector2(-112, -111)
 script = ExtResource("1_7a73b")
+explosion_enemigo = ExtResource("2_dc8fn")
 pego_laser = ExtResource("2_r0e3n")
 metadata/_edit_group_ = true
 

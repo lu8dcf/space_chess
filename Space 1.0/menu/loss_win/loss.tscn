@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://flrrkds2vth3"]
+[gd_scene load_steps=6 format=3 uid="uid://flrrkds2vth3"]
 
 [ext_resource type="Script" path="res://menu/loss_win/scripts/loss.gd" id="1_k0xxe"]
 [ext_resource type="Texture2D" uid="uid://cy7vwd8yjd16u" path="res://recursos/fondo/perdiste.png" id="2_7g2i7"]
 [ext_resource type="AudioStream" uid="uid://bor8nyjm32k2a" path="res://recursos/sound/button.mp3" id="3_eqtmg"]
+[ext_resource type="AudioStream" uid="uid://gjcngsnambvj" path="res://recursos/sound/loss.mp3" id="4_s2qj1"]
 
 [sub_resource type="SystemFont" id="SystemFont_ds2p2"]
 
@@ -59,6 +60,9 @@ size_flags_vertical = 8
 theme_override_fonts/font = SubResource("SystemFont_ds2p2")
 theme_override_font_sizes/font_size = 34
 text = "EXIT"
+
+[node name="loss" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_s2qj1")
 
 [connection signal="pressed" from="VBoxContainer2/button_menu" to="." method="_on_button_menu_pressed"]
 [connection signal="pressed" from="VBoxContainer2/button_restart" to="." method="_on_button_restart_pressed"]

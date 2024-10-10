@@ -14,18 +14,21 @@ func _ready():
 	
 	# Cada instancia tendra una velocidad diferente aleatoria
 func cambio_velocidad():
-	var random_integer = rand.randi_range(0, 2)  # Genera un número entre 0  y 2 (inclusive)
-	if random_integer==1:  
-		pasos /= 2      # divide la velocidad
-	elif  random_integer==2:
-		pasos *= 2		# duplica la velicidad
+	var random = rand.randi_range(0, 2)  # Genera un número entre 0  y 2 (inclusive)
+	match random:
+		0:
+			pasos /= 2      # divide la velocidad
+		1:
+			pasos *= 2		# duplica la velicidad
+		2:	
+			pasos += 1 		# suma 1 cuadro mas veloz
 		
 # Mueve al enemigo un paso hacia abajo (simulando un peón)
 func move_down():
 	position += move_direction * pasos
 	#set_vector(get_node("../Mara").global_position - global_position)
-# cuando el laser del player impacta en el enemigo y lo destruye, sonido y animaciom
 
+# LASER del PLAYER cuando el laser del player impacta en el enemigo y lo destruye, sonido y animaciom
 func _pego_el_laser():
 	# Instanciar la escena de explosión
 	var explosion_instance = explosion.instantiate()
@@ -33,7 +36,7 @@ func _pego_el_laser():
 	get_parent().add_child(explosion_instance)
 	explosion_instance.emitting = true
 	
-# Destruir el enemigo y player con el que colisiona
+# COLISION Destruir el enemigo y player con el que colisiona
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("player"):
 		body._choco_player()  # Llama a la función que maneja la destrucción

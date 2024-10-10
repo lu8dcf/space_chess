@@ -5,8 +5,6 @@ var nuevo_fondo = preload("res://recursos/fondo/Fondo0.png")  # fondo por defect
 @onready var menu_text_stages = $"../menu_text_stages"
 @onready var label_text_stages = $label_stage
 
-
-
 @export var vibracion : Camera2D  # Nodo Camera2D para el temblor
 
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ce4b88f3ge3ig"]
+[gd_scene load_steps=6 format=3 uid="uid://ce4b88f3ge3ig"]
 
 [ext_resource type="Script" path="res://menu/loss_win/scripts/win.gd" id="1_1uaeu"]
 [ext_resource type="Texture2D" uid="uid://b272obi35m46q" path="res://recursos/fondo/ganaste.png" id="1_4ut81"]
 [ext_resource type="AudioStream" uid="uid://bor8nyjm32k2a" path="res://recursos/sound/button.mp3" id="2_0yg75"]
+[ext_resource type="AudioStream" uid="uid://lr2b6u768brg" path="res://recursos/sound/win.mp3" id="4_ottrh"]
 
 [sub_resource type="SystemFont" id="SystemFont_uiom3"]
 
@@ -58,6 +59,9 @@ size_flags_vertical = 8
 theme_override_fonts/font = SubResource("SystemFont_uiom3")
 theme_override_font_sizes/font_size = 34
 text = "EXIT"
+
+[node name="win" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ottrh")
 
 [connection signal="pressed" from="VBoxContainer2/button_menu" to="." method="_on_button_menu_pressed"]
 [connection signal="pressed" from="VBoxContainer2/button_restart" to="." method="_on_button_restart_pressed"]

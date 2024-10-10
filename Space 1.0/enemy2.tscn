@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hsxkc"]
 radius = 21.0
-height = 42.0
+height = 46.0
 
 [node name="Enemigos2" type="CharacterBody2D" groups=["enemy"]]
 position = Vector2(-23, -43)

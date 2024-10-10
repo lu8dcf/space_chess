@@ -35,6 +35,8 @@ vertical_alignment = 1
 [node name="musica_base" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_nluri")
 volume_db = -13.811
+pitch_scale = 0.8
+autoplay = true
 bus = &"Music"
 
 [node name="menu_text_stages" type="Popup" parent="."]
