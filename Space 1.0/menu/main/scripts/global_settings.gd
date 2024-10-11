@@ -9,6 +9,10 @@ signal game_multiplayer_main(value)
 var game_multiplayer = false
 var mouse_sens = 0.5
 
+# propiedades de las naves
+var speed_main = 500
+var deadzone_radius_main = 20 
+
 # predeterminar los valores para que el jugador 1 empiece con mouse y el 2 empiece con teclas WSAD
 var player1_switch_keyboard_mouse = true# si es true es mouse, si es false son teclas
 var player1_arrows_or_awsd =  true #si es true, juega con flechas, si es false, juega con AWSD

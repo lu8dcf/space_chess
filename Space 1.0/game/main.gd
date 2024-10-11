@@ -16,12 +16,16 @@ var boss_activo=0 # Bandera para Agregar secuaces al BOSS
 var rocas = [] # Almacena las instancias de las rocas
 var timer_aparece_rocas = .5 # 1 seg Intervalo que aparecen los enemigos
 
+# Container
+var containers =[] # Almacena los contenedores con premios
+
 # Fondo
 var planetas = [] # planetas del fondo
 var planeta = null
 var planeta_x = 0.3 * pantalla_ancho # ubicacion inicial del planeta en ele eje x
 @onready var musica_base = $musica_base  # musica base, para aumentar la emosion se cambia su velocidad
 @onready var loss_ = $loss_  # Sonido de haber perdido
+
 # Fondo perder y ganar
 @onready var back_loss = $Node/bacground_win
 @onready var back_win = $Node/background_loss
@@ -29,16 +33,17 @@ var planeta_x = 0.3 * pantalla_ancho # ubicacion inicial del planeta en ele eje 
 
 # Player
 var player = null
-var vidas = 8   # cantidad de vidas
-signal live
+var screen_live = Global.lives   # cantidad de vidas que se muestran en pantalla
+signal live  # muestra las vidas activas
 
 # Player2
 var player2 = null
-var vidas2 = 8 # cantidad de vidas
 var multi_player = GlobalSettings.game_multiplayer
+var multiplex = 1
 
 # Puntos del juego
 var score = 0 # Puntos totales
+var screen_score = 0 # Puntos que se muestran
 var score_stage = 0 # Puntos del stage
 var stage_actual = 1
 signal score_total
@@ -51,7 +56,7 @@ var rocas_container=5 # Cantidad de rocas eliminadas necesarias para obtener un 
 
 func _ready():	
 	
-	
+	multiplayer_game()
 
 	inicia_planeta(planeta_x) # Instanciar planeta del fondo con movimiento
 		
@@ -67,8 +72,11 @@ func _ready():
 	
 	musica_juego()	
 	
+func multiplayer_game():
+	if multi_player: # si es multiplayer se duplican los valores para pasar de nivel
+		Global.lives *=2  # duplica la cantidad de vidas
+		multiplex = 2 # duplica los puentos para pasar de nivel
 		
-
 # Función para el callback de multijugador
 func _on_check_multiplayer_toggled(toggle: bool):
 	print("¡Se ha activado la función de multijugador! main")
@@ -84,11 +92,11 @@ func inicia_planeta(ubicacion_x): # Instanciar planeta
 	planeta.position = Vector2(planeta_x,0)  # Colocar al planeta en la parte superioir fuera a un cuato de X
 	add_child(planeta)  # Agrega el nodo hijo
 	
-func inicia_player():
+func inicia_player():  # Inicia al player 1
 	player = preload("res://player/player.tscn").instantiate()
 	player.position = Vector2(pantalla_ancho/2,0.9*pantalla_alto)  # Colocar al jugador en la parte inferior al centro
 	add_child(player)  # Agrega el nodo hijo
-	emit_signal("live",vidas) # Muestra la cantidad de vidas
+	screen_lives() # Muestra la cantidad de vidas
 	
 func inicia_player2():
 	if multi_player: # si multi_player es true, se instancia la nave 2
@@ -145,7 +153,6 @@ func _aparece_enemies():
 	if stage_actual == 4 and boss_activo != 0:
 		boss_activo = rand.randi_range(1, 3)  # Genera un número entre 1  y 3 (inclusive)
 	
-	
 func temporizador_agrega_rocas():
 	# Timer que marca los tiempos que se intancian las rocas
 	var roca_aparece_timer = Timer.new()
@@ -158,10 +165,11 @@ func temporizador_agrega_rocas():
 func _aparece_roca():
 	var roca = preload("res://enemies/roca.tscn").instantiate() #Instanciar
 	# Posicionamiento en X aleatorio
-	var posicion_x = randf_range(0, pantalla_ancho) 
+	var posicion_x = randf_range(100, 0.95*pantalla_ancho) 
 	roca.position = Vector2(posicion_x, 0)
 	add_child(roca)  #Agrega nodo hijo
 	rocas.append(roca) # Agrega a la lista de rocas
+	
 	# desaparecen las rocas que estan fuera de la pantalla
 	for rocaD in rocas:
 		
@@ -185,8 +193,9 @@ func _move_enemies(): # Mueve todas las naves enemigas hacia abajo cada vez que 
 	
 	calculo_rocas() # Calcula la cant  rocas eliminada para proveer un container premio
 	
+	calculo_container() # Verifica que el container se eleje de la pantalla y lo elimin
 	planeta.move_down() # Mueve al planeta (solo es un efecto secundario efecto de fondo)
-
+	
 func calculo_score():
 	
 	var enemigos_eliminados = 0    # Actualiza el valor de la pantalla anterior
@@ -224,36 +233,60 @@ func calculo_rocas():
 		if rocasD == null: # Si existe el elemento
 			rocas_eliminadas +=1
 			pass
-					
+	
+	# Eliminar una cantidad de rocas obtiene un contenedor con premio
 	if rocas_eliminadas == rocas_container:   # verifica el puntaje sea diferente al anterior
-		print ("container")
-		rocas_container += rocas_container
+		_aparece_container()
+		rocas_container += rocas_container # suma al dobre la dificultad de obtener otro contenedor
 		#emit_signal("score_total",score)  # emite la señal cuando hubo un cambio de score y lo envia a la pantalla
 	pass
+	
+func _aparece_container():
+	var container = preload("res://awards/container.tscn").instantiate() #Instanciar
+	# Posicionamiento en X aleatorio
+	var posicion_x = randf_range(100, 0.9*pantalla_ancho) 
+	container.position = Vector2(posicion_x, 0)
+	add_child(container)  #Agrega nodo hijo
+	containers.append(container) # Agrega a la lista de rocas
+	pass
+	
+	
+	
 	# Niveles
+
+func calculo_container():
+	# desaparecen los containers que estan fuera de la pantalla
+	for containerD in containers:
+		 # Si existe el elemento
+		if containerD != null and containerD.position.y > 0.97*pantalla_alto:
+			containerD.queue_free() # Eliminar del árbol de nodos
+			containers.erase(containerD) # Eliminar de la lista de containers
+			
 func _process(delta):
-	if multi_player:
-		if score == 100:
+	
+	control_score()  # Cambia de stage basado en el score
+	
+	cambio_stage()   # Limpia la pantalla si cambia el stage
+	
+	estado_lives()  # Verifica la cantidad de vidas
+	
+		
+func control_score():
+	if score != screen_score:	 # Si hay un cambio en los valores
+		if score == 100 * multiplex: #multiplex es un multiplicador para multijugador
 			stage_actual=2   # Cambio al nvel 2
 			score_stage=score
-		elif score == 200:
+		elif score == 200 * multiplex:
 			stage_actual=3   # Cambio al nivel 3
 			score_stage=score
-		elif score == 300:
-			stage_actual=4   # Cambio al nivel 4
-			score_stage=score		
-	else:
-		if score == 100:
-			stage_actual=2   # Cambio al nvel 2
-			score_stage=score
-		elif score == 200:
-			stage_actual=3   # Cambio al nivel 3
-			score_stage=score
-		elif score == 300:
+		elif score == 300 * multiplex:
 			stage_actual=4   # Cambio al nivel 4
 			score_stage=score
-	# cambio de nivel
-	if stage_actual!=stage_anterior:
+		screen_score=score
+	pass		
+
+func cambio_stage():
+	if stage_actual!=stage_anterior: # cambio de nivel
 		emit_signal("stage",stage_actual) # Señal que cambia el finde de la pantalla
 		musica_base.pitch_scale += 0.1   # aumenta la velocidad de la musica base de la partida
 		
@@ -271,30 +304,33 @@ func _process(delta):
 				enemy.queue_free()  # Elimina del árbol de nodos
 				enemies.erase(enemy)  # Elimina de la lista de enemigos
 		enemies=[]
-			
+		
+		# Bandera de guarda stage 
 		stage_anterior=stage_actual
-	
-	if player == null and vidas>0: # Si existe el elemento
-		vidas -=1
-		emit_signal("live",vidas) # Muestra la cantidad de vidas
-		inicia_player()
-	elif player == null and vidas==0:
+	pass
+
+func estado_lives():
+	if player == null and Global.lives>0: # Si existe el elemento y tiene vidas
+		Global.lives -=1 # le saca una vida
+		screen_lives()
+		inicia_player() # se vuelve a spanear
+	elif player == null and Global.lives==0:  # Si existe y no tiene vida
 		loss_game()
-	else:
-		pass
+	
 		
 	# vidas del player2
 	if multi_player:
-		if player2 == null and vidas2>0: # Si existe el elemento
-			vidas2 -=1
+		if player2 == null and Global.lives>0: # Si existe el elemento
+			Global.lives -=1
 			inicia_player2()
-		elif player2 == null and vidas2==0 and vidas == 0:
+		elif player2 == null and  Global.lives == 0:
 			loss_game()
-		else:
-			pass
-			
 		
-		
+	
+	# verifica si cambio la cantidad de vidas a mostrar
+	if Global.lives != screen_live:
+		screen_lives()	#muestra y actualiza
+
 func win_game(enemigos_eliminados):
 	get_tree().change_scene_to_file("res://menu/loss_win/win.tscn")
 	emit_signal("win")
@@ -310,7 +346,10 @@ func loss_game(): # al hacer click en el boton de JUGAR empieza el juego en el n
 func musica_juego():
 	$musica_base.play()
 
-
+func screen_lives():
+	emit_signal("live",Global.lives) # Muestra la cantidad de vidas
+	screen_live=Global.lives  # actualiza lo que esta mostrando en pantalla
+	pass
 
 ##### REINICIO del juego desde el menu principal
 	

@@ -24,3 +24,9 @@ func _on_body_entered(body):
 		body._pego_el_laser()  # Llama a la función que maneja la destrucción
 		body.queue_free()  # Elimina el objeto enemigo
 		queue_free()  # Elimina el láser
+	
+	elif body.is_in_group("award"):
+		body._pego_el_laser()  # Llama a la función que maneja la destrucción
+		body.queue_free()  # Elimina el objeto enemigo
+		queue_free()  # Elimina el láser
+		

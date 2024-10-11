@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 # Propiedades de la Nave
-var speed = 500 # velocidad de movimiento de la nave
+var speed = GlobalSettings.speed_main # velocidad de movimiento de la nave
 var direction = Vector2.ZERO
-var deadzone_radius : float = 20  # Zona muerta para cuando el mouse se alinea con la nave
+var deadzone_radius : float = GlobalSettings.deadzone_radius_main  # Zona muerta para cuando el mouse se alinea con la nave
 
 var mouse_sensitivy = GlobalSettings.mouse_sens # se utiliza la variable global que se modifica en el menu de opciones
 
