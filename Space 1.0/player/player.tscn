@@ -1,15 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://b88gaq1so3n7g"]
+[gd_scene load_steps=8 format=3 uid="uid://b88gaq1so3n7g"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_0j0iw"]
 [ext_resource type="PackedScene" uid="uid://v50j6nufhptt" path="res://burst/explosion_player.tscn" id="2_ywktm"]
 [ext_resource type="Texture2D" uid="uid://doog0hrulhm7x" path="res://recursos/player/player.png" id="3_5ol4x"]
+[ext_resource type="Script" path="res://player/shield.gd" id="4_d5y7y"]
+[ext_resource type="Texture2D" uid="uid://ct5fq7i6fioiv" path="res://recursos/player/shield/circle_blue.png" id="5_nj0w0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mvm0k"]
 radius = 11.0
 height = 46.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_x0epu"]
+radius = 42.0119
+
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
-position = Vector2(619, 618)
+position = Vector2(618, 626)
 script = ExtResource("1_0j0iw")
 explosion = ExtResource("2_ywktm")
 metadata/_edit_group_ = true
@@ -23,3 +28,20 @@ texture = ExtResource("3_5ol4x")
 position = Vector2(1, 1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_mvm0k")
+
+[node name="shield" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("4_d5y7y")
+
+[node name="sprite_shield" type="Sprite2D" parent="shield"]
+position = Vector2(0.499985, -0.499985)
+scale = Vector2(0.02375, 0.02375)
+texture = ExtResource("5_nj0w0")
+
+[node name="collision_shield" type="CollisionShape2D" parent="shield"]
+shape = SubResource("CircleShape2D_x0epu")
+disabled = true
+
+[connection signal="body_entered" from="shield" to="shield" method="_on_body_entered"]

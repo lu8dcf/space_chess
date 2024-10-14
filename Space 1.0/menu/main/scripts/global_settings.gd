@@ -8,6 +8,7 @@ signal game_multiplayer_main(value)
 # variables
 var game_multiplayer = false
 var mouse_sens = 0.5
+var respawn = false
 
 # propiedades de las naves
 var speed_main = 500

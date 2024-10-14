@@ -22,6 +22,14 @@ var switch_keyboard_mouse = GlobalSettings.player1_switch_keyboard_mouse # si es
 var arrows_or_awsd = GlobalSettings.player1_arrows_or_awsd #si es true, juega con flechas, si es false, juega con AWSD
 
 
+func _ready() -> void:
+	if GlobalSettings.respawn:
+		activate_shield()
+		await get_tree().create_timer(3).timeout  # Espera a que el temporizador termine
+		$shield.queue_free()
+
+
+
 
 func _physics_process(delta):
 	# depende de lo que elija el jugador, se ejecutara el movimiento con teclado o con mouse.
@@ -131,3 +139,12 @@ func _choco_player():
 	explosion_instance.position = position  # Colocar la explosión en la posición del player
 	get_parent().add_child(explosion_instance)
 	explosion_instance.emitting = true
+	GlobalSettings.respawn = true
+	
+	
+	
+# activar el escudo	
+func activate_shield():
+	$shield.collision_layer = 3
+	$shield.visible = true
+	$shield/collision_shield.set_deferred("disabled", false)
