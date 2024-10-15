@@ -1,13 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://8v8r8xh5kwx0"]
+[gd_scene load_steps=6 format=3 uid="uid://8v8r8xh5kwx0"]
 
 [ext_resource type="Script" path="res://background/titulo.gd" id="1_17ow2"]
 [ext_resource type="Texture2D" uid="uid://ci6qjl4a0akbw" path="res://recursos/enemy/nave_icono.png" id="2_j5iil"]
+[ext_resource type="Texture2D" uid="uid://pp3cxljcjspn" path="res://recursos/enemy/roca.png" id="3_6c0rk"]
+[ext_resource type="Texture2D" uid="uid://b24w2da485x8h" path="res://recursos/awards/container_icono.png" id="4_8rbaq"]
+[ext_resource type="Texture2D" uid="uid://rslh02svosv2" path="res://recursos/awards/arrow.png" id="5_yemox"]
 
 [node name="Panel" type="Panel"]
 offset_left = 14.0
 offset_top = 64.0
-offset_right = 117.0
-offset_bottom = 128.0
+offset_right = 141.0
+offset_bottom = 168.0
 script = ExtResource("1_17ow2")
 
 [node name="score" type="Label" parent="."]
@@ -49,7 +52,7 @@ offset_right = 448.0
 offset_bottom = 118.0
 text = "PERDISTE"
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="player" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 34.0
@@ -58,3 +61,39 @@ offset_bottom = 57.0
 texture = ExtResource("2_j5iil")
 expand_mode = 1
 stretch_mode = 1
+
+[node name="roca" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 76.0
+offset_right = 49.0
+offset_bottom = 96.0
+texture = ExtResource("3_6c0rk")
+expand_mode = 3
+
+[node name="container" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 101.0
+offset_right = 94.0188
+offset_bottom = 132.0
+rotation = -1.85354
+texture = ExtResource("4_8rbaq")
+expand_mode = 3
+
+[node name="rocas_container" type="Label" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 72.0
+offset_right = 30.0
+offset_bottom = 95.0
+text = "0"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 72.0
+offset_right = 67.3146
+offset_bottom = 106.0
+texture = ExtResource("5_yemox")
+expand_mode = 3

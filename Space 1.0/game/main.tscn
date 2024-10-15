@@ -129,6 +129,7 @@ text = "Esc key for pause"
 
 [connection signal="live" from="." to="Control" method="_on_main_live"]
 [connection signal="loss" from="." to="Control" method="_on_main_loss"]
+[connection signal="rocas_falta_container" from="." to="Control" method="_on_main_rocas_falta_container"]
 [connection signal="score_total" from="." to="Control" method="_on_main_score_total"]
 [connection signal="stage" from="." to="fondo1" method="_on_main_stage"]
 [connection signal="pressed" from="menu_pause/VBoxContainer/button_menu" to="menu_pause" method="_on_button_pressed"]

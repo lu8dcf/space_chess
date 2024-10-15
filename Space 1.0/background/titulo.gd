@@ -20,3 +20,8 @@ func _on_main_live(vidas) -> void:
 
 func _on_main_loss() -> void:
 	pass # Replace with function body.
+
+
+func _on_main_rocas_falta_container(rocas_eliminadas_antes) -> void:
+	get_node("rocas_container").set_text(str(rocas_eliminadas_antes))
+	pass # Replace with function body.

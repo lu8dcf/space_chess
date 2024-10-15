@@ -18,6 +18,8 @@ var timer_aparece_rocas = .5 # 1 seg Intervalo que aparecen los enemigos
 
 # Container
 var containers =[] # Almacena los contenedores con premios
+signal rocas_falta_container # cantidad de rocas para el container
+var rocas_eliminadas_antes= 0 # Control de piedras eliminadas antes de obtener el container
 
 # Fondo
 var planetas = [] # planetas del fondo
@@ -194,6 +196,7 @@ func _move_enemies(): # Mueve todas las naves enemigas hacia abajo cada vez que 
 	calculo_rocas() # Calcula la cant  rocas eliminada para proveer un container premio
 	
 	calculo_container() # Verifica que el container se eleje de la pantalla y lo elimin
+	
 	planeta.move_down() # Mueve al planeta (solo es un efecto secundario efecto de fondo)
 	
 func calculo_score():
@@ -231,16 +234,20 @@ func calculo_rocas():
 	# SCORE - Se basa en la cantidad de enemigos eliminados 10 puntos por cada uno
 	for rocasD in rocas:  # Repasa las instancias activas de los enemigos
 		if rocasD == null: # Si existe el elemento
-			rocas_eliminadas +=1
+			rocas_eliminadas +=1  # cuenta la cantidad de rocas eliminadas por el player
 			pass
 	
 	# Eliminar una cantidad de rocas obtiene un contenedor con premio
 	if rocas_eliminadas == rocas_container:   # verifica el puntaje sea diferente al anterior
-		_aparece_container()
-		rocas_container += rocas_container # suma al dobre la dificultad de obtener otro contenedor
+		_aparece_container()   # Instancia un container
+		rocas_container = rocas_eliminadas + 5 # suma al doble la dificultad de obtener otro contenedor
 		#emit_signal("score_total",score)  # emite la señal cuando hubo un cambio de score y lo envia a la pantalla
 	pass
 	
+	if rocas_eliminadas_antes != (rocas_container - rocas_eliminadas):
+		rocas_eliminadas_antes = rocas_container - rocas_eliminadas
+		emit_signal("rocas_falta_container",rocas_eliminadas_antes)  # Cantidad de rocas que faltan y se indica en pantalla
+	print (rocas_eliminadas," ",rocas_container," antes  ",rocas_eliminadas_antes)
 func _aparece_container():
 	var container = preload("res://awards/container.tscn").instantiate() #Instanciar
 	# Posicionamiento en X aleatorio
