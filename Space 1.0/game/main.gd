@@ -20,6 +20,7 @@ var timer_aparece_rocas = .5 # 1 seg Intervalo que aparecen los enemigos
 var containers =[] # Almacena los contenedores con premios
 signal rocas_falta_container # cantidad de rocas para el container
 var rocas_eliminadas_antes= 0 # Control de piedras eliminadas antes de obtener el container
+var rocas_container=5 # Cantidad de rocas eliminadas necesarias para obtener un container con una vida
 
 # Fondo
 var planetas = [] # planetas del fondo
@@ -53,8 +54,8 @@ signal stage # Indicador de Stage actual
 signal loss
 var stage_anterior = 0 #Inicio de la partida
 
-# Premios
-var rocas_container=5 # Cantidad de rocas eliminadas necesarias para obtener un container con una vida
+
+
 
 func _ready():	
 	
@@ -230,6 +231,7 @@ func calculo_score():
 		emit_signal("score_total",score)  # emite la señal cuando hubo un cambio de score y lo envia a la pantalla
 						
 func calculo_rocas():
+	# en cada nivel aumentara la cantidad de rocas para un contenedor, dependiendo de lo obtenido en el antrioir
 	var rocas_eliminadas = 0    # Actualiza el valor de la pantalla anterior
 	# SCORE - Se basa en la cantidad de enemigos eliminados 10 puntos por cada uno
 	for rocasD in rocas:  # Repasa las instancias activas de los enemigos
@@ -247,7 +249,7 @@ func calculo_rocas():
 	if rocas_eliminadas_antes != (rocas_container - rocas_eliminadas):
 		rocas_eliminadas_antes = rocas_container - rocas_eliminadas
 		emit_signal("rocas_falta_container",rocas_eliminadas_antes)  # Cantidad de rocas que faltan y se indica en pantalla
-	print (rocas_eliminadas," ",rocas_container," antes  ",rocas_eliminadas_antes)
+	
 func _aparece_container():
 	var container = preload("res://awards/container.tscn").instantiate() #Instanciar
 	# Posicionamiento en X aleatorio
@@ -362,8 +364,7 @@ func screen_lives():
 	
 func reset_game():
 	get_tree().reload_current_scene() #resetea la escena principal y sus hijos
-	
-	
+	GlobalSettings.respawn = false
 	pass
 
 # se toca el boton restart

@@ -17,7 +17,8 @@ func _on_button_menu_pressed() -> void:
 
 
 func _on_button_restart_pressed() -> void:
-		get_tree().change_scene_to_file("res://main.tscn")
+		get_tree().change_scene_to_file("res://game/main.tscn")
+		GlobalSettings.respawn = false
 
 
 
