@@ -1,6 +1,6 @@
 extends Node
 
-var score = 20
+var score = 0
 var enemigos_aliminados = 0
 
 

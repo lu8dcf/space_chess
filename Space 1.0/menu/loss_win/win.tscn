@@ -63,6 +63,22 @@ text = "EXIT"
 [node name="win" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_ottrh")
 
+[node name="your_score2" type="Label" parent="."]
+offset_left = 377.0
+offset_top = 614.0
+offset_right = 499.0
+offset_bottom = 638.0
+scale = Vector2(3, 3)
+text = "YOUR SCORE"
+
+[node name="score" type="Label" parent="."]
+offset_left = 728.0
+offset_top = 614.0
+offset_right = 768.0
+offset_bottom = 637.0
+scale = Vector2(3, 3)
+text = "0"
+
 [connection signal="pressed" from="VBoxContainer2/button_menu" to="." method="_on_button_menu_pressed"]
 [connection signal="pressed" from="VBoxContainer2/button_restart" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="VBoxContainer2/button_exit" to="." method="_on_button_exit_pressed"]

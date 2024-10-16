@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://d2brgrhmcwqvk"]
 
 [ext_resource type="Script" path="res://awards/container.gd" id="1_nutte"]
-[ext_resource type="Texture2D" uid="uid://cm7vycmmkoqpn" path="res://recursos/awards/container.png" id="1_yldtr"]
 [ext_resource type="PackedScene" uid="uid://bq4e0eqxpb0ke" path="res://burst/explosion_enemigo.tscn" id="2_qkuxe"]
+[ext_resource type="Texture2D" uid="uid://c1nbflkf1t5km" path="res://recursos/awards/conteiner brilloso.png" id="3_xmol2"]
 
 [sub_resource type="Animation" id="Animation_oa53d"]
 length = 5.0
@@ -58,7 +58,7 @@ metadata/_edit_group_ = true
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-2, 3)
 scale = Vector2(0.326316, 0.338235)
-texture = ExtResource("1_yldtr")
+texture = ExtResource("3_xmol2")
 hframes = 5
 vframes = 2
 

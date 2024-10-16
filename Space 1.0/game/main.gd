@@ -229,7 +229,7 @@ func calculo_score():
 	if enemigos_eliminados != score:   # verifica el puntaje sea diferente al anterior
 		score = enemigos_eliminados	  # guarda el valor del score actual
 		emit_signal("score_total",score)  # emite la señal cuando hubo un cambio de score y lo envia a la pantalla
-						
+		Global.score = score 				
 func calculo_rocas():
 	# en cada nivel aumentara la cantidad de rocas para un contenedor, dependiendo de lo obtenido en el antrioir
 	var rocas_eliminadas = 0    # Actualiza el valor de la pantalla anterior
