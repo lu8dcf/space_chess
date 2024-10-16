@@ -22,10 +22,9 @@ var switch_keyboard_mouse = GlobalSettings.player2_switch_keyboard_mouse # si es
 var arrows_or_awsd = GlobalSettings.player2_arrows_or_awsd
 
 func _ready() -> void:
-	if GlobalSettings.respawn:
+	if GlobalSettings.respawn: # si el jugador respawnea, activa el escudo
 		activate_shield()
-		await get_tree().create_timer(3).timeout  # Espera a que el temporizador termine
-		$shield.queue_free()
+
 
 
 
@@ -146,6 +145,9 @@ func _fire_laser():
 
 # activar el escudo 	
 func activate_shield():
-	$shield.collision_layer = 3
-	$shield.visible = true
+	var escudo = $shield
+	escudo.collision_layer = 3
+	escudo.visible = true
 	$shield/collision_shield.set_deferred("disabled", false)
+	await get_tree().create_timer(3).timeout  # Espera a que el temporizador termine
+	escudo.queue_free() #elimina el escudo

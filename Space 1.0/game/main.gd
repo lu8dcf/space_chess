@@ -365,6 +365,7 @@ func screen_lives():
 func reset_game():
 	get_tree().reload_current_scene() #resetea la escena principal y sus hijos
 	GlobalSettings.respawn = false
+	Global.lives = 3
 	pass
 
 # se toca el boton restart

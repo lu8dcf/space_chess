@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2bcdrjamsuso"
-path="res://.godot/imported/Conteiner brilloso.png-2d3128264417a48454dab70f6afee680.ctex"
+uid="uid://c1nbflkf1t5km"
+path="res://.godot/imported/conteiner brilloso.png-1a1ba276721ec4b4bf336afdc56863a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://recursos/awards/Conteiner brilloso.png"
-dest_files=["res://.godot/imported/Conteiner brilloso.png-2d3128264417a48454dab70f6afee680.ctex"]
+source_file="res://recursos/awards/conteiner brilloso.png"
+dest_files=["res://.godot/imported/conteiner brilloso.png-1a1ba276721ec4b4bf336afdc56863a6.ctex"]
 
 [params]
 

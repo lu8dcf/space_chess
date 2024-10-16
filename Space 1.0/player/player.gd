@@ -23,10 +23,9 @@ var arrows_or_awsd = GlobalSettings.player1_arrows_or_awsd #si es true, juega co
 
 
 func _ready() -> void:
-	if GlobalSettings.respawn:
+	if GlobalSettings.respawn: #si respawnea el jugador, activa el escudo
 		activate_shield()
-		await get_tree().create_timer(3).timeout  # Espera a que el temporizador termine
-		$shield.queue_free()
+
 
 
 
@@ -39,7 +38,6 @@ func _physics_process(delta):
 	else:
 		move_with_keyboards();
 		shoot_with_key();
-
 	pass
 
 #movimiento con teclado, depende que elija el usuario, ejecuta la funcion de flechas o "awsd"
@@ -145,6 +143,9 @@ func _choco_player():
 	
 # activar el escudo	
 func activate_shield():
-	$shield.collision_layer = 3
-	$shield.visible = true
-	$shield/collision_shield.set_deferred("disabled", false)
+	var escudo = $shield
+	escudo.collision_layer = 3 #activa las collisiones con enemigos
+	escudo.visible = true	#hace visible el escudo
+	$shield/collision_shield.set_deferred("disabled", false) #activa el collision
+	await get_tree().create_timer(3).timeout  # Espera a que el temporizador termine
+	escudo.queue_free() #elimina el escudo

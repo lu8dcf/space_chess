@@ -14,13 +14,19 @@ func _process(delta: float) -> void:
 
 func _on_button_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://menu/main/index.tscn")
+	reset_player_settings()
 
 
 func _on_button_restart_pressed() -> void:
-		get_tree().change_scene_to_file("res://game/main.tscn")
-		GlobalSettings.respawn = false
-
+	get_tree().change_scene_to_file("res://game/main.tscn")
+	reset_player_settings()
 
 
 func _on_button_exit_pressed() -> void:
 	get_tree().quit()
+
+
+func reset_player_settings():
+	GlobalSettings.respawn = false
+	Global.lives = 3
+	pass

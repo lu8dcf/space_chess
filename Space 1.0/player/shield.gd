@@ -12,12 +12,10 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("boss"):
-		body.vida_boss -= 1 
-		queue_free()
+	if body.is_in_group("boss"): # si lo que collisiona es el boss, ejecuta lo siguiente
+		body.vida_boss -= 1 #le resta una vida al boss
+		queue_free()#elimina el escudo
 	else:
 		body._pego_el_laser()  # Llama a la función que maneja la destrucción
 		body.queue_free()  # Elimina el objeto enemigo
-	#if body != $"roca":
-		#get_node("res://game/main.tscn").score -= 10	
-	pass # Replace with function body.
+	pass
