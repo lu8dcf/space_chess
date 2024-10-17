@@ -48,3 +48,33 @@ func _on_option_button_player_1_item_selected(index: int) -> void:
 
 func _on_option_button_player_2_item_selected(index: int) -> void:
 	GlobalSettings.move_player2(index)
+
+
+func _on_difficulty_item_selected(index: int) -> void:
+	match index:
+		0:
+			print("hard")
+			GlobalSettings.tiempo_entre_laser_enemigo = .5
+			GlobalSettings.vida_boss = 30
+			GlobalSettings.tiempo_que_aparece_enemigo = .5
+			GlobalSettings.tiempo_que_aparece_rocas = .5
+			GlobalSettings.cant_rocas_para_obtener_contenedor = 10
+			GlobalSettings.intervalo_movimiento_enemigo = 0.05
+		1:
+			print("medium")
+			GlobalSettings.tiempo_entre_laser_enemigo = 1
+			GlobalSettings.vida_boss = 20
+			GlobalSettings.tiempo_que_aparece_enemigo = 1
+			GlobalSettings.tiempo_que_aparece_rocas = 1
+			GlobalSettings.cant_rocas_para_obtener_contenedor = 5
+			GlobalSettings.intervalo_movimiento_enemigo = 0.1
+		2:
+			print("noob")
+			GlobalSettings.tiempo_entre_laser_enemigo = 2
+			GlobalSettings.vida_boss = 10
+			GlobalSettings.tiempo_que_aparece_enemigo = 2
+			GlobalSettings.tiempo_que_aparece_rocas = 2
+			GlobalSettings.cant_rocas_para_obtener_contenedor = 3
+			GlobalSettings.intervalo_movimiento_enemigo = 0.2
+	print(index)
+	pass # Replace with function body.

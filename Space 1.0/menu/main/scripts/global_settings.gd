@@ -21,7 +21,7 @@ var player2_switch_keyboard_mouse = false # si es true es mouse, si es false son
 var player2_arrows_or_awsd =  false #si es true, juega con flechas, si es false, juega con AWSD
 
 # pantalla
-var pantalla_ancho = 1200
+var pantalla_ancho = 1280
 var pantalla_alto = 720
 
 # creditos
@@ -79,3 +79,13 @@ func move_player2(index):
 func update_mouse_sens(value):
 	emit_signal("mouse_sens_updated", value)
 	mouse_sens = value
+	
+	
+# Dificultad del juego
+
+var tiempo_entre_laser_enemigo = 1
+var vida_boss = 20
+var tiempo_que_aparece_enemigo = 1
+var tiempo_que_aparece_rocas = 1
+var cant_rocas_para_obtener_contenedor = 5
+var intervalo_movimiento_enemigo = 0.05

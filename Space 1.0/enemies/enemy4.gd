@@ -4,13 +4,13 @@ var pasos = 5  # Tamaño del paso en píxeles (similar a un "cuadro" de ajedrez)
 var move_direction = Vector2(1, 0)  # Dirección de descenso
 var cantidad_pasos = 0  # pasos para la logica de movimiento lateral
 var rand = RandomNumberGenerator.new() #semilla de aleatoriedad
-var vida_boss =20
+var vida_boss = GlobalSettings.vida_boss
 var nueva_direccion_y=0
 
 # laser enenmigo
 var can_shoot = true # habilita el disparo del laser
 var laser_scene = preload("res://enemies/laser_enemy.tscn")  # Cargar la escena del láser
-var tiempo_entre_laser =  0.1 
+var tiempo_entre_laser =   GlobalSettings.tiempo_entre_laser_enemigo 
 
 # pantalla
 var pantalla_ancho = Global.pantalla_ancho

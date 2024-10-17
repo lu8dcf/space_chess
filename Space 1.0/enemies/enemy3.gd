@@ -8,7 +8,7 @@ var rand = RandomNumberGenerator.new() #semilla de aleatoriedad
 # laser enenmigo
 var can_shoot = true # habilita el disparo del laser
 var laser_scene = preload("res://enemies/laser_enemy.tscn")  # Cargar la escena del láser
-var tiempo_entre_laser =  0.1 
+var tiempo_entre_laser =  GlobalSettings.tiempo_entre_laser_enemigo
 # Selector de velocidad por random
 
 func _ready():

@@ -7,7 +7,7 @@
 base_font = ExtResource("2_cj0ok")
 
 [node name="SettingMenu" type="Popup"]
-position = Vector2i(750, 228)
+position = Vector2i(687, 0)
 size = Vector2i(500, 300)
 visible = true
 script = ExtResource("1_iqy3a")
@@ -26,9 +26,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 40.0
 offset_bottom = 40.0
-current_tab = 0
+current_tab = 2
 
 [node name="Video" type="TabBar" parent="settings_tabs"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -137,7 +138,6 @@ value = 50.0
 rounded = true
 
 [node name="Game Mode" type="TabBar" parent="settings_tabs"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -239,6 +239,28 @@ popup/item_1/id = 1
 popup/item_2/text = "WSAD keys"
 popup/item_2/id = 2
 
+[node name="difficulty_label" type="Label" parent="settings_tabs/Game Mode/MarginContainer/game_settings"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = SubResource("FontVariation_ckbuj")
+theme_override_font_sizes/font_size = 29
+text = "Difficulty"
+
+[node name="difficulty" type="HBoxContainer" parent="settings_tabs/Game Mode/MarginContainer/game_settings"]
+layout_mode = 2
+
+[node name="difficulty" type="OptionButton" parent="settings_tabs/Game Mode/MarginContainer/game_settings/difficulty"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_cj0ok")
+theme_override_font_sizes/font_size = 24
+selected = 1
+item_count = 3
+popup/item_0/text = "Hard"
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Noob"
+popup/item_2/id = 2
+
 [connection signal="item_selected" from="settings_tabs/Video/MarginContainer/video_settings/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="value_changed" from="settings_tabs/Audio/MarginContainer/audio_settings/HBoxContainer/master_slider" to="." method="_on_master_slider_value_changed"]
 [connection signal="value_changed" from="settings_tabs/Audio/MarginContainer/audio_settings/HBoxContainer2/music_slider" to="." method="_on_music_slider_value_changed"]
@@ -248,3 +270,4 @@ popup/item_2/id = 2
 [connection signal="value_changed" from="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer3/mouse_slider" to="." method="_on_mouse_slider_value_changed"]
 [connection signal="item_selected" from="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer5/OptionButtonPlayer1" to="." method="_on_option_button_player_1_item_selected"]
 [connection signal="item_selected" from="settings_tabs/Game Mode/MarginContainer/game_settings/HBoxContainer6/OptionButtonPlayer2" to="." method="_on_option_button_player_2_item_selected"]
+[connection signal="item_selected" from="settings_tabs/Game Mode/MarginContainer/game_settings/difficulty/difficulty" to="." method="_on_difficulty_item_selected"]

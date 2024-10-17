@@ -64,6 +64,7 @@ text = "EXIT"
 stream = ExtResource("4_ottrh")
 
 [node name="your_score2" type="Label" parent="."]
+layout_mode = 0
 offset_left = 377.0
 offset_top = 614.0
 offset_right = 499.0
@@ -72,6 +73,7 @@ scale = Vector2(3, 3)
 text = "YOUR SCORE"
 
 [node name="score" type="Label" parent="."]
+layout_mode = 0
 offset_left = 728.0
 offset_top = 614.0
 offset_right = 768.0

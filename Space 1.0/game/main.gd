@@ -8,19 +8,19 @@ var rand = RandomNumberGenerator.new() # semilla de random segun el tiempo
 # Enemigos
 var enemies = []  # Almacenará las instancias de enemigos
 var enemies_boss = [] # Almacenara las instancias de los enemigos Boss
-var movimiento_enemigo = 0.05  # Intervalo de tiempo para el movimiento enemigo
-var timer_aparece_enemigo = .5 # 1seg Intervalo que aparecen los enemigos
+var movimiento_enemigo = GlobalSettings.intervalo_movimiento_enemigo  # Intervalo de tiempo para el movimiento enemigo
+var timer_aparece_enemigo = GlobalSettings.tiempo_que_aparece_enemigo # 1seg Intervalo que aparecen los enemigos
 var boss_activo=0 # Bandera para Agregar secuaces al BOSS
 
 # Rocas
 var rocas = [] # Almacena las instancias de las rocas
-var timer_aparece_rocas = .5 # 1 seg Intervalo que aparecen los enemigos
+var timer_aparece_rocas = GlobalSettings.tiempo_que_aparece_rocas # 1 seg Intervalo que aparecen los enemigos
 
 # Container
 var containers =[] # Almacena los contenedores con premios
 signal rocas_falta_container # cantidad de rocas para el container
 var rocas_eliminadas_antes= 0 # Control de piedras eliminadas antes de obtener el container
-var rocas_container=5 # Cantidad de rocas eliminadas necesarias para obtener un container con una vida
+var rocas_container= GlobalSettings.cant_rocas_para_obtener_contenedor # Cantidad de rocas eliminadas necesarias para obtener un container con una vida
 
 # Fondo
 var planetas = [] # planetas del fondo
